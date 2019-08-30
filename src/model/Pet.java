@@ -1,20 +1,23 @@
 package model;
+import java.io.Serializable;
 
 /**
 *<b>Description:</b> The class Pet in the package model.<br>
 *@author Johan Giraldo.
 */
 
-public class Pet {
+public class Pet implements Serializable {
 
 //Attributes
 
+	private static final long serialVersionUID = -8399330065765763732L;
 	private String id;
 	private String name;
 	private String birthdate;
 	private String petType;
 
 //Constructor
+	
 	/**
 	*<b>Description:</b> The constructor of the class Pet.<br>
 	*<b>Pre:</b> No one parameter can be null.<br>
