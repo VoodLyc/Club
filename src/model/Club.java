@@ -52,7 +52,7 @@ public class Club {
 
 		try{
 
-			directory = new File("data//" + name + "//");
+			directory = new File("data/" + name + "/");
 			directory.mkdir();
 			file = new File("data/" + name + "/" + name + ".txt");
 
@@ -71,25 +71,30 @@ public class Club {
 	}
 
 	public void addOwners(String id, String name, String birthdate, String favoritePet){
-		
+	
+		owners.add(new Owner(id, name, birthdate, favoritePet));
+	}
+
+	public void saveOwners(){
+
 		FileOutputStream file; 
 		ObjectOutputStream output;
-		Owner owner;
-		owner = new Owner(id, name, birthdate, favoritePet);
 
-		try{
+		for(Owner o : owners){
+
+			try{
 
 			file = new FileOutputStream("data/" + name + "/");
 			output = new ObjectOutputStream(file);
-			output.writeObject(owner);
+			output.writeObject(o);
 			output.close();
+			}
+			catch(FileNotFoundException e){
+				e.printStackTrace();
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}			
 		}
-		catch(FileNotFoundException e){
-			e.printStackTrace();
-		}
-		catch(IOException e){
-			e.printStackTrace();
-		}
-
 	}
 }

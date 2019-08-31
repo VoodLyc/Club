@@ -25,7 +25,6 @@ public class Main {
 		
 		scanner = new Scanner(System.in);
 		clubsSystem = new ClubsManagementSystem();
-		menu();
 	}
 
 	public void menu(){
@@ -114,13 +113,13 @@ public class Main {
 		name = scanner.nextLine();
 
 		System.out.println("Please enter the club creation's day (A number between 1 and 31)");
-		day = validateInt(1,31);
+		day = validateInt(1, 31);
 
 		System.out.println("Please enter the club creation's month (A number between 1 and 12)");
-		month = validateInt(1,12);
+		month = validateInt(1, 12);
 
 		System.out.println("Please enter the club creation's year (Example: 2015)");
-		year = validateInt(1,5000);
+		year = validateInt(1, 5000);
 
 		creationDate = day + "/" + month + "/" + year; 
 		
