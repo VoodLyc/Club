@@ -38,4 +38,13 @@ public class Owner implements Serializable {
 		this.favoritePet = favoritePet;
 		pets = new ArrayList<Pet>();
 	}
+	
+	/**
+	 *<b>Description:</b> This method allows returning the attribute name<br>
+	 * @return The attribute name.
+	 */
+
+	public String getName(){
+		return name;
+	}
 }

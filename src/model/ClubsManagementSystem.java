@@ -35,6 +35,12 @@ public class ClubsManagementSystem {
 		clubs.add(new Club(id, name, creationDate, petType));
 	}
 	
+	/**
+	 *<b>Description:</b> This method allows clubs to be loaded by reading the attributes that were saved in a text file and rebuilding them<br>
+	 *<b>Pre:</b> The folder "data" with the program's data must exist.<br>
+	 *<b>Post:</b> The clubs are rebuilt.<br>
+	 */
+	
 	public void loadClubs(){
 		
 		File folder;
@@ -64,10 +70,10 @@ public class ClubsManagementSystem {
 			}
 		}
 		catch(FileNotFoundException e){
-			e.printStackTrace();
+			System.out.println("Loading error");
 		}
 		catch(IOException e){
-			e.printStackTrace();
+			System.out.println("Loading error");
 		}
 	}
 }
