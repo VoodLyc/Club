@@ -39,12 +39,23 @@ public class Owner implements Serializable {
 		pets = new ArrayList<Pet>();
 	}
 	
+//Methods
+	
 	/**
 	 *<b>Description:</b> This method allows returning the attribute name<br>
 	 * @return The attribute name.
 	 */
 
 	public String getName(){
+		return name;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows returning the attribute id<br>
+	 * @return The attribute id.
+	 */
+
+	public String getId() {
 		return name;
 	}
 }

@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import model.IllegalNameException;
 
 /**
 *<b>Description:</b> The class Club in the package model.<br>
@@ -47,6 +46,8 @@ public class Club {
 		saveClub();
 	}
 	
+//Methods
+	
 	/**
 	*<b>Description:</b> This method allows saving the club's attributes (excluding the ArrayList of owners).<br>
 	*<b>Post:</b> Club's attributes are saved in a .txt file.<br>
@@ -55,14 +56,13 @@ public class Club {
 	public void saveClub(){
 		
 		String data = "";
-		File file;
-		File directory;
+		File file, dir;
 
 		try{
 
-			directory = new File("data/" + name + "/");
-			directory.mkdir();
-			file = new File("data/" + name + "/" + name + ".txt");
+			dir = new File("data/" + id);
+			dir.mkdir();
+			file = new File("data/" + id + "/" + id + ".txt");
 
 			data += id + "\n";
 			data += name + "\n";
@@ -74,12 +74,12 @@ public class Club {
 			writer.close();
 		}
 		catch (FileNotFoundException e){
-			System.out.println("Save failed");
+			System.out.println("A saving error has occurred");
 		}
 	}
 	
 	/**
-	*<b>Description:</b> This method allows adding owners in the ArrayList of owners, if the owner that will be added have a equals name that other owner already added, the method throws a IllegalNameException<br>
+	*<b>Description:</b> This method allows adding owners in the ArrayList of owners, if the owner that will be added have a equals id that other owner already added, the method throws an IllegalIdException.<br>
 	*@param id The owner's identification.
 	*@param name The owner's name.
 	*@param birthdate The owner's birthdate.
@@ -92,9 +92,9 @@ public class Club {
 		String msg = "The owner could not be added";
 		
 		try{
-			if(checkIfExistOwnerWithThisName(name)){
+			if(checkIfExistOwnerWithThisId(id)){
 				
-				throw new IllegalNameException("An Owner with this name already exists, please try again");
+				throw new IllegalIdException("An Owner with this name already exists, please try again");
 			}
 			else{
 				
@@ -102,7 +102,7 @@ public class Club {
 				msg = "The owner was added successfully";
 			}
 		}
-		catch(IllegalNameException e ){
+		catch(IllegalIdException e ){
 			
 			System.out.println(e.getMessage());
 		}
@@ -111,19 +111,22 @@ public class Club {
 	}
 	
 	/**
-	 *<b>Description:</b> This method allows checking if the already exist a owner with that name<br>
-	 * @param name The owner's name.
+	 *<b>Description:</b> This method allows checking if already exist an owner with that id.<br>
+	 * @param id The owner's name.
 	 * @return A boolean true if an owner with that name exists and false if the owner doesn't exist.
 	 */
 	
-	public boolean checkIfExistOwnerWithThisName(String name){
-		boolean exist = false;
+	public boolean checkIfExistOwnerWithThisId(String id){
 		
-		for(Owner o : owners){
+		boolean exist = false;
+		boolean running = true;
+		
+		for(int i = 0; i < owners.size() && running; i++){
 			
-			if(o.getName().equals(name)){
+			if(owners.get(i).getId().equals(id)){
 				
 				exist = true;
+				running = false;
 			}
 		}
 		return exist;
@@ -143,16 +146,16 @@ public class Club {
 
 			try{
 
-			file = new FileOutputStream("data/" + name + "/");
+			file = new FileOutputStream("data/" + id + "/" + o.getId() + ".dat");
 			output = new ObjectOutputStream(file);
 			output.writeObject(o);
 			output.close();
 			}
 			catch(FileNotFoundException e){
-				System.out.println("Save failed");
+				System.out.println("A saving error has occurred");
 			}
 			catch(IOException e){
-				System.out.println("Save failed"); 
+				System.out.println("A saving error has occurred"); 
 			}			
 		}
 	}
@@ -172,14 +175,14 @@ public class Club {
 		
 		try{
 			
-			folder = new File("data/" + name + "/");
+			folder = new File("data/" + id + "/");
 			objects = folder.list();
 			
-			for(String o : objects){
+			for(String object : objects){
 				
-				if(!o.equals(name + ".txt")){
+				if(!object.equals(id + ".txt")){
 					
-					file = new FileInputStream("data/" + name + "/" + o);
+					file = new FileInputStream("data/" + id + "/" + object);
 					input = new ObjectInputStream(file);
 					owner = (Owner) input.readObject();
 					owners.add(owner);
@@ -188,15 +191,33 @@ public class Club {
 		}
 		catch(FileNotFoundException e){
 			
-			System.out.println("Loading error");		
+			System.out.println("A loading error has occurred");		
 		} 
 		catch(IOException e){
 			
-			System.out.println("Loading error");
+			System.out.println("A loading error has occurred");
 		}
 		catch(ClassNotFoundException e){
 		
-			System.out.println("Loading error");
+			System.out.println("A loading error has occurred");
 		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows returning the attribute name<br>
+	 * @return The attribute name.
+	 */
+
+	public String getName(){
+		return name;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows returning the attribute id<br>
+	 * @return The attribute id.
+	 */
+
+	public String getId(){
+		return id;
 	}
 }

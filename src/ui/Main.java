@@ -37,29 +37,31 @@ public class Main {
 			choice = PrincipalMenu();
 
 			switch(choice){
-
-				case 1:
-
+			
+			case 1:
+				
+				enterInAClubMenu();
+				
 				break;
-
-				case 2:
-
+				
+			case 2:
+				
 				registerClubMenu();
+				
+				break;
+
+			case 3:
 
 				break;
 
-				case 3:
-
-				break;
-
-				case 4:
-
+			case 4:
+	
 				running = false;
 
 				break;
 
-				default:
-
+			default:
+				
 				System.out.println("Please enter a correct value");
 			}
 		}	
@@ -127,6 +129,15 @@ public class Main {
 		petType = scanner.nextLine();
 
 		clubsSystem.addClub(id, name, creationDate, petType);
+	}
+	
+	public void enterInAClubMenu(){
+		
+		String id;
+		
+		System.out.println("Please enter the club's id");
+		id = scanner.nextLine();
+		
 	}
 
 	public int validateInt(int minimum, int max){
