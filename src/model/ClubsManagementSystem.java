@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import model.ClubNotFoundException;
 import model.IllegalIdException;
 
 /**
@@ -42,31 +41,28 @@ public class ClubsManagementSystem {
 	
 	public void loadClubs(){
 		
-		File folder;
-		String[] names, attributes;
 		FileReader file;
 		BufferedReader reader;
+		String[] attributes;
 		String line;
 		
 		try{
 			
-			folder = new File("data/");
-			names = folder.list();
+			file = new FileReader("data/Clubs.txt");
+			reader = new BufferedReader(file);
+			attributes = new String[4];
 			
-			for(String name : names){
+			while((line = reader.readLine()) != null){
 				
-				file = new FileReader("data/" + name + "/" + name + ".txt");
-				reader = new BufferedReader(file);
-				attributes = new String[4];
+					attributes[0] = line;
+					attributes[1] = reader.readLine();
+					attributes[2] = reader.readLine();
+					attributes[3] = reader.readLine();
 				
-				for(int i = 0; (line = reader.readLine()) != null; i++){
-					
-					attributes[i] = line;
-				}
-				
-				clubs.add(new Club(attributes[0], attributes[1], attributes[2], attributes[3]));
-				reader.close();
+				createClub(attributes);
 			}
+			
+			reader.close();
 		}
 		catch(FileNotFoundException e){
 			System.out.println("A loading error has occurred");
@@ -74,6 +70,21 @@ public class ClubsManagementSystem {
 		catch(IOException e){
 			System.out.println("A loading error has occurred");
 		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows adding clubs already saved in Clubs.txt to the ArrayList of clubs.<br>
+	 *<b>Post:</b> The club was added in the ArrayList of clubs.<br>
+	 * @param attributes.
+	 */
+	
+	public void createClub(String[] attributes){
+		
+		Club club;
+		
+		club = new Club(attributes[0], attributes[1], attributes[2], attributes[3]);
+		
+		clubs.add(club);
 	}
 	
 	/**
@@ -110,7 +121,8 @@ public class ClubsManagementSystem {
 	
 	public String addClub(String id, String name, String creationDate, String petType){
 		
-		String msg = "The owner could not be added";
+		String msg = "";
+		Club club = null;
 		
 		try{
 			
@@ -120,12 +132,15 @@ public class ClubsManagementSystem {
 			}
 			else{
 				
-				clubs.add(new Club(id, name, creationDate, petType));
+				club = new Club(id, name, creationDate, petType);
+				clubs.add(club);
+				club.saveClub();
+				msg = "The club was added successfully";
 			}
 		}
 		catch(IllegalIdException e){
 			
-			System.out.println(e.getMessage());
+			System.out.print(e.getMessage());
 		}		
 		
 		return msg;
@@ -158,7 +173,8 @@ public class ClubsManagementSystem {
 				}
 				
 				dir.delete();
-				msg = "The club was deleted succesfully";
+				msg = "The club was deleted successfully";
+				clubs.remove(i);
 				running = false;
 			}
 		}
@@ -172,7 +188,7 @@ public class ClubsManagementSystem {
 	 * @return The club with this id.
 	 */
 	
-	public Club getClub(String id) throws ClubNotFoundException{
+	public Club getClub(String id){
 		
 		Club club = null;
 		boolean running = true;
@@ -184,12 +200,7 @@ public class ClubsManagementSystem {
 				club = clubs.get(i);
 				running = false;
 			}
-		}
-		if(club == null){
-			
-			throw new ClubNotFoundException("The club could not be found, please try again");
-		}
-		
+		}		
 		return club;
 	}
 }

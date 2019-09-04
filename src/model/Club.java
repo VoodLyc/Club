@@ -1,9 +1,11 @@
 package model;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -42,8 +44,7 @@ public class Club {
 		this.name = name;
 		this.creationDate = creationDate;
 		this.petType = petType;
-		owners = new ArrayList<Owner>();
-		saveClub();
+		owners = new ArrayList<Owner>(); 
 	}
 	
 //Methods
@@ -56,18 +57,14 @@ public class Club {
 	public void saveClub(){
 		
 		String data = "";
-		File file, dir;
+		File file;
 
 		try{
-
-			dir = new File("data/" + id);
-			dir.mkdir();
-			file = new File("data/" + id + "/" + id + ".txt");
-
-			data += id + "\n";
-			data += name + "\n";
-			data += creationDate + "\n";
-			data += petType;
+			
+			file = new File("data/Clubs.txt");	
+			
+			data += readClubsData();
+			data += toString();
 
 			PrintWriter writer = new PrintWriter(file);
 			writer.append(data);
@@ -76,38 +73,103 @@ public class Club {
 		catch (FileNotFoundException e){
 			System.out.println("A saving error has occurred");
 		}
+		catch(IOException e){
+			
+			System.out.println("A saving error has occurred");
+		}
 	}
 	
 	/**
-	*<b>Description:</b> This method allows adding owners in the ArrayList of owners, if the owner that will be added have a equals id that other owner already added, the method throws an IllegalIdException.<br>
+	*<b>Description:</b> This method allows converting the club's attributes in a String.<br>
+	*@return A String with the company's attributes.
+	*/
+	
+	public String toString(){
+		
+		String toString = "";
+		
+		toString += id + "\n";
+		toString += name + "\n";
+		toString += creationDate + "\n";
+		toString += petType;
+		
+		return toString;
+	}
+	
+	/**
+	*<b>Description:</b> This method allows reading the data in Clubs.txt.<br>
+	*@return The data in the Clubs.txt. 
+	*/
+	
+	public String readClubsData() throws IOException, FileNotFoundException{
+		
+		String data = "";
+		String line;
+
+		FileReader file;
+		BufferedReader reader;
+			
+			file = new FileReader("data/Clubs.txt");
+			reader = new BufferedReader(file);
+			
+			while((line = reader.readLine()) != null){
+				
+				data += line + "\n";
+			}
+			
+			reader.close();
+		
+		return data;
+	}	
+	/**
+	*<b>Description:</b> This method allows adding owners in the ArrayList of owners.<br>
 	*@param id The owner's identification.
 	*@param name The owner's name.
 	*@param birthdate The owner's birthdate.
 	*@param favoritePet The owner's favorite pet(Type).
 	*@return A message that indicates if the owner was added or if the owner can't be added.
+	*@throws IllegalIdException If the owner that will be added have a equals id that other owner already added.
 	*/
 
 	public String addOwners(String id, String name, String birthdate, String favoritePet){
 		
-		String msg = "The owner could not be added";
+		String msg = "";
 		
 		try{
 			if(checkIfExistOwnerWithThisId(id)){
 				
-				throw new IllegalIdException("An Owner with this name already exists, please try again");
+				throw new IllegalIdException("An Owner with this id already exists, please try again");
 			}
 			else{
 				
 				owners.add(new Owner(id, name, birthdate, favoritePet));
+				saveOwners();
 				msg = "The owner was added successfully";
 			}
 		}
 		catch(IllegalIdException e ){
 			
-			System.out.println(e.getMessage());
+			System.out.print(e.getMessage());
 		}
 		
 		return msg;
+	}
+	
+	/**
+	 * 
+	 *@param club 
+	 *@param id The owner's identification.
+	 *@param name The owner's name.
+	 *@param birthdate The owner's birthdate.
+	 *@param favoritePet The owner's favorite pet(Type).
+	 *@return A message that indicates if the owner was added or if the owner can't be added. 
+	 */
+	
+	public String addOwner(Club club, String id, String name, String birthdate, String favoritePet){
+		
+		String msg = club.addOwners(id, name, birthdate, favoritePet);
+		
+		return msg;	
 	}
 	
 	/**
@@ -142,13 +204,13 @@ public class Club {
 		FileOutputStream file; 
 		ObjectOutputStream output;
 
-		for(Owner o : owners){
+		for(Owner owner : owners){
 
 			try{
 
-			file = new FileOutputStream("data/" + id + "/" + o.getId() + ".dat");
+			file = new FileOutputStream("data/" + id + ".dat");
 			output = new ObjectOutputStream(file);
-			output.writeObject(o);
+			output.writeObject(owner);
 			output.close();
 			}
 			catch(FileNotFoundException e){
@@ -162,6 +224,7 @@ public class Club {
 	
 	/**
 	 *<b>Description:</b> This method allows loading the club's owners.<br>
+	 *<b>Pre:</b> The folder "data" with the program's data must exist<br>
 	 *<b>Post:</b> The owners have been deserialized.<br>
 	 */
 	

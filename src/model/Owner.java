@@ -56,6 +56,6 @@ public class Owner implements Serializable {
 	 */
 
 	public String getId() {
-		return name;
+		return id;
 	}
 }
