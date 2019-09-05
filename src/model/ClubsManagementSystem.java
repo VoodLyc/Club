@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import model.IllegalIdException;
@@ -75,7 +76,7 @@ public class ClubsManagementSystem {
 	/**
 	 *<b>Description:</b> This method allows adding clubs already saved in Clubs.txt to the ArrayList of clubs.<br>
 	 *<b>Post:</b> The club was added in the ArrayList of clubs.<br>
-	 * @param attributes.
+	 *@param attributes.
 	 */
 	
 	public void createClub(String[] attributes){
@@ -89,8 +90,8 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows checking if already exist an Club with that id.<br>
-	 * @param id The club's id.
-	 * @return A true Boolean if there is a club with that identification and false if there is no club with that identification.
+	 *@param id The club's id.
+	 *@return A true Boolean if there is a club with that identification and false if there is no club with that identification.
 	 */
 	
 	public boolean checkIfExistClubWithThisId(String id){
@@ -116,7 +117,7 @@ public class ClubsManagementSystem {
 	 *@param name The club's name.
 	 *@param creationDate The club's creation date.
 	 *@param petType The club's pets type.
-	 * @return A message that indicates if the club was added or if the club can't be added.
+	 *@return A message that indicates if the club was added or if the club can't be added.
 	 */
 	
 	public String addClub(String id, String name, String creationDate, String petType){
@@ -156,30 +157,107 @@ public class ClubsManagementSystem {
 	public String deleteClub(String arg){
 		
 		String msg = "The club could not be found, please try again";
-		File dir;
-		File[] files;
+		String[] attributes;
+		String id, name;
+		
+		try{
+			
+			attributes = getClubNameAndId(arg);
+			id = attributes[0];
+			name = attributes[1];
+			
+			if(id != null && name != null){
+				
+				deleteClubsData(id, name);
+				deleteOwners(id);
+				msg = "The was deleted succesfully";
+			}
+		
+		}
+		catch (FileNotFoundException e){
+			System.out.println("A deleting error has occurred");
+		}
+		catch(IOException e){
+			
+			System.out.println("A deleting error has occurred");
+		}
+		
+		return msg;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows deleting the owners of the club.<br>
+	 *@param id The club's id.
+	 *<b>Post:</b> The .owners file was deleted.<br>
+	 */
+	public void deleteOwners(String id){
+		
+		File file;
+		
+		file = new File("data/" + id + ".owners");
+		
+		file.delete();
+	}
+	
+	/**
+	*<b>Description:</b> This method allows you to read the data in Clubs.txt and not save the club that matches the name and identification.<br>
+	*@return The Clubs.txt data without the club who match with the id and the name.
+	*/
+	
+	public void deleteClubsData(String id, String name) throws IOException, FileNotFoundException{
+		
+		String data = "";
+		String line = "";
+		PrintWriter writer;
+		FileReader file;
+		BufferedReader reader;
+			
+			file = new FileReader("data/Clubs.txt");
+			reader = new BufferedReader(file);
+			
+			while((line = reader.readLine()) != null){
+				
+				if(!line.equals(id)){
+					
+					data += line + "\n";
+				}
+				else{
+					
+					reader.readLine();
+					reader.readLine();
+					reader.readLine();
+				}
+			}
+			
+			reader.close();
+			writer = new PrintWriter("data/Clubs.txt");
+			writer.write(data);
+			writer.close();
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows to obtain the id and name of a club and remove it from the ArrayList by the argument.<br>
+	 * @param arg The name or the id of the club.
+	 * @return An Array with the name and the id of the club.
+	 */
+	
+	public String[] getClubNameAndId(String arg){
+		
+		String [] attributes = new String[2];
 		boolean running = true;
 		
 		for(int i = 0; i < clubs.size() && running; i++){
 			
-			if(clubs.get(i).getId().equals(arg) || clubs.get(i).getName().equals(arg)){
-				
-				dir = new File("data/" + clubs.get(i).getId() + "/");
-				files = dir.listFiles();
-				
-				for(File file : files){
+			if(clubs.get(i).getName().equals(arg) || clubs.get(i).getId().equals(arg)){	
 					
-					file.delete();
-				}
-				
-				dir.delete();
-				msg = "The club was deleted successfully";
-				clubs.remove(i);
-				running = false;
+					attributes[0] = clubs.get(i).getId();
+					attributes[1] = clubs.get(i).getName();
+					clubs.remove(i);
+					running = false;
 			}
 		}
 		
-		return msg;
+		return attributes;
 	}
 	
 	/**

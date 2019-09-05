@@ -5,6 +5,7 @@ import java.util.Scanner;
 import model.ClubsManagementSystem;
 import model.Club;
 import model.Owner;
+import model.Pet;
 
 public class Menu{
 
@@ -62,6 +63,7 @@ public class Menu{
 		}	
 	}
 
+
 	public int systemOptionMenu(){
 
 		boolean running = true;
@@ -82,7 +84,6 @@ public class Menu{
 			catch(InputMismatchException e){
 
 				scanner.next();
-				System.out.println("Please enter a correct value\n");
 			}
 
 			if(choice > 0 && choice < 5){
@@ -140,6 +141,7 @@ public class Menu{
 		
 		String id;
 		boolean running = true;
+		Club club;
 		
 		while(running){
 			
@@ -148,7 +150,9 @@ public class Menu{
 			
 			if(clubsSystem.checkIfExistClubWithThisId(id)){
 				
-				clubsSystem.getClub(id);
+				club = clubsSystem.getClub(id);
+				clubMenu(club);
+				running = false;
 				
 			}
 			else{
@@ -218,7 +222,6 @@ public class Menu{
 			catch(InputMismatchException e){
 
 				scanner.next();
-				System.out.println("Please enter a correct value\n");
 			}
 
 			if(choice > 0 && choice < 5){

@@ -44,7 +44,8 @@ public class Club {
 		this.name = name;
 		this.creationDate = creationDate;
 		this.petType = petType;
-		owners = new ArrayList<Owner>(); 
+		owners = new ArrayList<Owner>();
+		loadOwners();
 	}
 	
 //Methods
@@ -61,7 +62,7 @@ public class Club {
 
 		try{
 			
-			file = new File("data/Clubs.txt");	
+			file = new File("data/Clubs.txt");
 			
 			data += readClubsData();
 			data += toString();
@@ -120,7 +121,8 @@ public class Club {
 			reader.close();
 		
 		return data;
-	}	
+	}
+	
 	/**
 	*<b>Description:</b> This method allows adding owners in the ArrayList of owners.<br>
 	*@param id The owner's identification.
@@ -156,23 +158,6 @@ public class Club {
 	}
 	
 	/**
-	 * 
-	 *@param club 
-	 *@param id The owner's identification.
-	 *@param name The owner's name.
-	 *@param birthdate The owner's birthdate.
-	 *@param favoritePet The owner's favorite pet(Type).
-	 *@return A message that indicates if the owner was added or if the owner can't be added. 
-	 */
-	
-	public String addOwner(Club club, String id, String name, String birthdate, String favoritePet){
-		
-		String msg = club.addOwners(id, name, birthdate, favoritePet);
-		
-		return msg;	
-	}
-	
-	/**
 	 *<b>Description:</b> This method allows checking if already exist an owner with that id.<br>
 	 * @param id The owner's name.
 	 * @return A boolean true if an owner with that name exists and false if the owner doesn't exist.
@@ -204,13 +189,11 @@ public class Club {
 		FileOutputStream file; 
 		ObjectOutputStream output;
 
-		for(Owner owner : owners){
-
 			try{
 
-			file = new FileOutputStream("data/" + id + ".dat");
+			file = new FileOutputStream("data/" + id + ".owners");
 			output = new ObjectOutputStream(file);
-			output.writeObject(owner);
+			output.writeObject(owners);
 			output.close();
 			}
 			catch(FileNotFoundException e){
@@ -219,7 +202,6 @@ public class Club {
 			catch(IOException e){
 				System.out.println("A saving error has occurred"); 
 			}			
-		}
 	}
 	
 	/**
@@ -230,27 +212,26 @@ public class Club {
 	
 	public void loadOwners(){
 		
-		FileInputStream file;
+		File file;
+		FileInputStream fileInput;
 		ObjectInputStream input;
-		File folder;
-		String[] objects;
-		Owner owner;
 		
 		try{
 			
-			folder = new File("data/" + id + "/");
-			objects = folder.list();
+			file = new File("data/" + id + ".owners");
 			
-			for(String object : objects){
+			if(file.exists()){
+
+				fileInput = new FileInputStream(file);
+				input = new ObjectInputStream(fileInput);
+				owners = (ArrayList<Owner>) input.readObject();
+				input.close();
+			}
+			else{
 				
-				if(!object.equals(id + ".txt")){
-					
-					file = new FileInputStream("data/" + id + "/" + object);
-					input = new ObjectInputStream(file);
-					owner = (Owner) input.readObject();
-					owners.add(owner);
-				}
-			}	
+				saveOwners();
+			}
+			
 		}
 		catch(FileNotFoundException e){
 			
@@ -265,10 +246,10 @@ public class Club {
 			System.out.println("A loading error has occurred");
 		}
 	}
-	
+
 	/**
-	 *<b>Description:</b> This method allows returning the attribute name<br>
-	 * @return The attribute name.
+	 *<b>Description:</b> This method allows returning the attribute name.<br>
+	 *@return The attribute name.
 	 */
 
 	public String getName(){
@@ -277,7 +258,7 @@ public class Club {
 	
 	/**
 	 *<b>Description:</b> This method allows returning the attribute id<br>
-	 * @return The attribute id.
+	 *@return The attribute id.
 	 */
 
 	public String getId(){
