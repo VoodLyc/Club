@@ -159,8 +159,8 @@ public class Club {
 	
 	/**
 	 *<b>Description:</b> This method allows checking if already exist an owner with that id.<br>
-	 * @param id The owner's name.
-	 * @return A boolean true if an owner with that name exists and false if the owner doesn't exist.
+	 * @param id The owner's id.
+	 * @return A boolean true if an owner with that id exists and false if the owner doesn't exist.
 	 */
 	
 	public boolean checkIfExistOwnerWithThisId(String id){
@@ -189,19 +189,19 @@ public class Club {
 		FileOutputStream file; 
 		ObjectOutputStream output;
 
-			try{
+		try{
 
-			file = new FileOutputStream("data/" + id + ".owners");
-			output = new ObjectOutputStream(file);
-			output.writeObject(owners);
-			output.close();
-			}
-			catch(FileNotFoundException e){
-				System.out.println("A saving error has occurred");
-			}
-			catch(IOException e){
-				System.out.println("A saving error has occurred"); 
-			}			
+		file = new FileOutputStream("data/" + id + ".owners");
+		output = new ObjectOutputStream(file);
+		output.writeObject(owners);
+		output.close();
+		}
+		catch(FileNotFoundException e){
+			System.out.println("A saving error has occurred");
+		}
+		catch(IOException e){
+			System.out.println("A saving error has occurred"); 
+		}			
 	}
 	
 	/**
@@ -245,6 +245,81 @@ public class Club {
 		
 			System.out.println("A loading error has occurred");
 		}
+	}
+	
+	public String deleteOwner(String arg){
+		
+		String msg = "The owner could not be found, please try again";
+		
+		if(removeOwner(arg)){
+			
+			saveOwners();
+			msg = "The owner was deleted succesfully";
+		}
+		
+		return msg;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows removing a owner by the argument.<br>
+	 *@param arg The name or the id of the owner.
+	 *@return A boolean that indicates if the owner was deleted or not.
+	 */
+	
+	public boolean removeOwner(String arg){
+		
+		boolean removed = false;
+		boolean running = true;
+		
+		for(int i = 0; i < owners.size() && running; i++){
+			
+			if(owners.get(i).getId().equals(arg) || owners.get(i).getName().equals(arg)){	
+					
+					owners.remove(i);
+					removed = true;
+					running = false;
+			}
+		}
+		
+		return removed;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows getting the index of the owner with that id.<br> 
+	 *@param id The owner's id.
+	 *@return A whole number with the index of the owner who matches with that id.
+	 */
+	
+	public int getOwnerIndex(String id){
+		
+		int index = -1;
+		boolean running = true;
+		
+		for(int i = 0; i < owners.size() && running; i++){
+			
+			if(owners.get(i).getId().equals(id)){
+	
+				index = i;
+				running = false;
+			}
+		}
+		
+		return index;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows getting a owner by the index.<br>
+	 * @param index The index where the owner is in the owners ArrayList.
+	 * @return The owner with this index.
+	 */
+	
+	public Owner getOwner(int index){
+		
+		Owner owner = null;
+		
+		owner = owners.get(index);
+		
+		return owner;
 	}
 
 	/**

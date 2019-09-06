@@ -112,6 +112,44 @@ public class ClubsManagementSystem {
 	}
 	
 	/**
+	 *<b>Description:</b> This method allows getting the index of the club with that id.<br> 
+	 *@param id The club's id.
+	 *@return A whole number with the index of the club who matches with that id.
+	 */
+	
+	public int getClubIndex(String id){
+		
+		int index = -1;
+		boolean running = true;
+		
+		for(int i = 0; i < clubs.size() && running; i++){
+			
+			if(clubs.get(i).getId().equals(id)){
+	
+				index = i;
+				running = false;
+			}
+		}
+		
+		return index;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows getting a club by the index.<br>
+	 * @param index The index where the club is in the clubs ArrayList.
+	 * @return The club with this index.
+	 */
+	
+	public Club getClub(int index){
+		
+		Club club = null;
+		
+		club = clubs.get(index);
+		
+		return club;
+	}
+			
+	/**
 	 *<b>Description:</b> This method allows adding clubs in the ArrayList of clubs if the club that will be added have a equals id that other club already added, the method throws an IllegalIdException.<br>
 	 *@param id The club's identification.
 	 *@param name The club's name.
@@ -157,20 +195,17 @@ public class ClubsManagementSystem {
 	public String deleteClub(String arg){
 		
 		String msg = "The club could not be found, please try again";
-		String[] attributes;
-		String id, name;
+		String id = null;
 		
 		try{
 			
-			attributes = getClubNameAndId(arg);
-			id = attributes[0];
-			name = attributes[1];
+			id = getClubId(arg);
 			
-			if(id != null && name != null){
+			if(id != null){
 				
-				deleteClubsData(id, name);
+				deleteClubsData(id);
 				deleteOwners(id);
-				msg = "The was deleted succesfully";
+				msg = "The was club deleted succesfully";
 			}
 		
 		}
@@ -204,7 +239,7 @@ public class ClubsManagementSystem {
 	*@return The Clubs.txt data without the club who match with the id and the name.
 	*/
 	
-	public void deleteClubsData(String id, String name) throws IOException, FileNotFoundException{
+	public void deleteClubsData(String id) throws IOException, FileNotFoundException{
 		
 		String data = "";
 		String line = "";
@@ -236,49 +271,26 @@ public class ClubsManagementSystem {
 	}
 	
 	/**
-	 *<b>Description:</b> This method allows to obtain the id and name of a club and remove it from the ArrayList by the argument.<br>
+	 *<b>Description:</b> This method allows getting the id of a club by the argument and remove it from the ArrayList.<br>
 	 * @param arg The name or the id of the club.
-	 * @return An Array with the name and the id of the club.
+	 * @return The club's id.
 	 */
 	
-	public String[] getClubNameAndId(String arg){
+	public String getClubId(String arg){
 		
-		String [] attributes = new String[2];
+		String id = null;
 		boolean running = true;
 		
 		for(int i = 0; i < clubs.size() && running; i++){
 			
 			if(clubs.get(i).getName().equals(arg) || clubs.get(i).getId().equals(arg)){	
 					
-					attributes[0] = clubs.get(i).getId();
-					attributes[1] = clubs.get(i).getName();
+					id = clubs.get(i).getId();
 					clubs.remove(i);
 					running = false;
 			}
 		}
 		
-		return attributes;
-	}
-	
-	/**
-	 *<b>Description:</b> This method allows getting a club by the id.<br>
-	 * @param id The club's id.
-	 * @return The club with this id.
-	 */
-	
-	public Club getClub(String id){
-		
-		Club club = null;
-		boolean running = true;
-		
-		for(int i = 0; i < clubs.size() && running; i++){
-			
-			if(clubs.get(i).getId().equals(id)){
-				
-				club = clubs.get(i);
-				running = false;
-			}
-		}		
-		return club;
+		return id;
 	}
 }

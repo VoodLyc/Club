@@ -35,4 +35,8 @@ public class Pet implements Serializable {
 		this.birthdate = birthdate;
 		this.petType = petType;
 	}
+
+	public String getName() {
+		return name;
+	}
 }
