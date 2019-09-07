@@ -10,13 +10,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
 *<b>Description:</b> The class Club in the package model.<br>
 *@author Johan Giraldo.
 */
 
-public class Club {
+public class Club implements Comparator<Club>{
 
 //Attributes
 
@@ -334,6 +335,31 @@ public class Club {
 	}
 	
 	/**
+	 *<b>Description:</b> This method allows comparing a club with other club by the id.<br>
+	 *@param club The club with which it compares.
+	 *@return 0 if the IDs are equals, 1  if the club's id is major than the club's id which it compares, -1 if the club's id is minor than the club's id which it compares.
+	 */
+	
+	@Override
+	public int compare(Club o1, Club o2){
+		
+		int result = 0;
+		int id = Integer.parseInt(o1.getId());
+		int id2 = Integer.parseInt(o2.getId());
+		
+		if(id > id2){
+			
+			result = 1;
+		}
+		else if(id < id2){
+			
+			result = -1;
+		}
+		
+		return result;
+	}
+	
+	/**
 	 *<b>Description:</b> This method allows comparing a club with other club by the name.<br>
 	 *@param club The club with which it compares.
 	 *@return 0 if the names are equals, 1  if the club's name is major than the club's name which it compares, -1 if the club's name is minor than the club's name which it compares.
@@ -348,30 +374,6 @@ public class Club {
 			result = 1;
 		}
 		else if(name.compareTo(club.getName()) < 0){
-			
-			result = -1;
-		}
-		
-		return result;
-	}
-	
-	/**
-	 *<b>Description:</b> This method allows comparing a club with other club by the id.<br>
-	 *@param club The club with which it compares.
-	 *@return 0 if the IDs are equals, 1  if the club's id is major than the club's id which it compares, -1 if the club's id is minor than the club's id which it compares.
-	 */
-	
-	public int compareById(Club club){
-		
-		int result = 0;
-		int id = Integer.parseInt(this.id);
-		int id2 = Integer.parseInt(club.getId());
-		
-		if(id > id2){
-			
-			result = 1;
-		}
-		else if(id < id2){
 			
 			result = -1;
 		}
