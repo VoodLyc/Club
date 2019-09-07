@@ -149,7 +149,7 @@ public class Club {
 				msg = "The owner was added successfully";
 			}
 		}
-		catch(IllegalIdException e ){
+		catch(IllegalIdException e){
 			
 			System.out.print(e.getMessage());
 		}
@@ -226,6 +226,11 @@ public class Club {
 				input = new ObjectInputStream(fileInput);
 				owners = (ArrayList<Owner>) input.readObject();
 				input.close();
+				
+				for(Owner o : owners){
+					
+					o.loadPets();
+				}
 			}
 			else{
 				
@@ -247,11 +252,17 @@ public class Club {
 		}
 	}
 	
-	public String deleteOwner(String arg){
+	/**
+	 *<b>Description:</b> This method allows deleting an owner of the owners ArrayList by the id.<br>
+	 *@param id The owner's id.
+	 *@return A message that indicates if the owner was deleted or not.
+	 */
+	
+	public String deleteOwner(String id){
 		
 		String msg = "The owner could not be found, please try again";
 		
-		if(removeOwner(arg)){
+		if(removeOwner(id)){
 			
 			saveOwners();
 			msg = "The owner was deleted succesfully";
@@ -261,19 +272,19 @@ public class Club {
 	}
 	
 	/**
-	 *<b>Description:</b> This method allows removing a owner by the argument.<br>
-	 *@param arg The name or the id of the owner.
-	 *@return A boolean that indicates if the owner was deleted or not.
+	 *<b>Description:</b> This method allows removing an owner of the owners ArrayList by the id.<br>
+	 *@param id The owner's id.
+	 *@return A boolean that indicates if the owner was removed or not.
 	 */
 	
-	public boolean removeOwner(String arg){
+	public boolean removeOwner(String id){
 		
 		boolean removed = false;
 		boolean running = true;
 		
 		for(int i = 0; i < owners.size() && running; i++){
 			
-			if(owners.get(i).getId().equals(arg) || owners.get(i).getName().equals(arg)){	
+			if(owners.get(i).getId().equals(id)){	
 					
 					owners.remove(i);
 					removed = true;
@@ -321,6 +332,142 @@ public class Club {
 		
 		return owner;
 	}
+	
+	/**
+	 *<b>Description:</b> This method allows comparing a club with other club by the name.<br>
+	 *@param club The club with which it compares.
+	 *@return 0 if the names are equals, 1  if the club's name is major than the club's name which it compares, -1 if the club's name is minor than the club's name which it compares.
+	 */
+	
+	public int compareByName(Club club){
+		
+		int result = 0;
+		
+		if(name.compareTo(club.getName()) > 0){
+			
+			result = 1;
+		}
+		else if(name.compareTo(club.getName()) < 0){
+			
+			result = -1;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows comparing a club with other club by the id.<br>
+	 *@param club The club with which it compares.
+	 *@return 0 if the IDs are equals, 1  if the club's id is major than the club's id which it compares, -1 if the club's id is minor than the club's id which it compares.
+	 */
+	
+	public int compareById(Club club){
+		
+		int result = 0;
+		int id = Integer.parseInt(this.id);
+		int id2 = Integer.parseInt(club.getId());
+		
+		if(id > id2){
+			
+			result = 1;
+		}
+		else if(id < id2){
+			
+			result = -1;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows comparing a club with other club by the creationDate.<br>
+	 *@param club The club with which it compares.
+	 *@return 0 if the creationDates are equals, 1  if the club's creationDate is major than the club's creationDate which it compares, -1 if the club's creationDate is minor than the club's creationDate which it compares.
+	 */
+	
+	public int compareByCreationDate(Club club){
+		
+		int result = 0;
+		int[] dates = splitDate(club);
+		
+		if(dates[0] > dates[1]){
+			
+			result = 1;
+		}
+		else if(dates[0] < dates[1]){
+			
+			result = -1;
+		}
+		else if(dates[0] == dates[1]){
+			
+			if(dates[2] > dates[3]){
+				
+				result = 1;
+			}
+			
+			else if(dates[2] < dates[3]){
+				
+				result = -1;
+			}
+			else if(dates[2] == dates[3]){
+				
+				if(dates[4] > dates [5]){
+					
+					result = 1;
+				}
+				else if(dates[4] < dates[5]){
+					
+					result = -1;
+				}
+				
+			}
+		}	
+		return result;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows splitting and does the parseInt to the club's creationDate and the to the club's creationDate which it compares.<br>
+	 *@param club The club with which it compares.
+	 *@return An array of int that represents the dates of both clubs.
+	 */
+	
+	public int[] splitDate(Club club){
+		
+		String[] date = creationDate.split("/");
+		String[] date2 = club.getCreationDate().split("/");
+		int[] dates = new int[6];
+		
+		dates[0] = Integer.parseInt(date[2]);
+		dates[1] = Integer.parseInt(date2[2]);
+		dates[2] = Integer.parseInt(date[1]);
+		dates[3] = Integer.parseInt(date2[1]);
+		dates[4] = Integer.parseInt(date[0]);
+		dates[5] = Integer.parseInt(date2[0]);
+		
+		return dates;
+	}
+
+	/**
+	 *<b>Description:</b> This method allows comparing a club with other club by the id.<br>
+	 *@param club The club with which it compares.
+	 *@return 0 if the IDs are equals, 1  if the club's id is major than the club's id which it compares, -1 if the club's id is minor than the club's id which it compares.
+	 */
+	
+	public int compareByPetType(Club club){
+		
+		int result = 0;
+		
+		if(petType.compareTo(club.getPetType()) > 0){
+			
+			result = 1;
+		}
+		else if(petType.compareTo(club.getPetType()) < 0){
+			
+			result = -1;
+		}
+		
+		return result;
+	}
 
 	/**
 	 *<b>Description:</b> This method allows returning the attribute name.<br>
@@ -338,5 +485,23 @@ public class Club {
 
 	public String getId(){
 		return id;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows returning the attribute petType.<br>
+	 *@return The attribute type.
+	 */
+
+	public String getPetType(){
+		return petType;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows returning the attribute creationDate<br>
+	 *@return The attribute creationDate.
+	 */
+
+	public String getCreationDate(){
+		return creationDate;
 	}
 }

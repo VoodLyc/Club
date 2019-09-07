@@ -45,6 +45,7 @@ public class Owner implements Serializable {
 		this.birthdate = birthdate;
 		this.favoritePet = favoritePet;
 		pets = new ArrayList<Pet>();
+		loadPets();
 	}
 	
 //Methods
@@ -55,7 +56,7 @@ public class Owner implements Serializable {
 	 *<b>Post:</b> The pets have been deserialized.<br>
 	 */
 	
-	public void loadOwners(){
+	public void loadPets(){
 		
 		File file;
 		FileInputStream fileInput;
@@ -161,6 +162,7 @@ public class Owner implements Serializable {
 	 *@param birthdate The pet's birthdate.
 	 *@param petType The pet's type.
 	 *@return A message that indicates if the pet was added or if the pet can't be added.
+	 *@throws IllegalIdException If the pet that will be added have a equals name that other pet already added.
 	 */
 	
 	public String addPets(String id, String name, String birthdate, String petType){
@@ -171,13 +173,14 @@ public class Owner implements Serializable {
 			
 			if(checkIfExistPetWithThisName(name)){
 				
-				throw new IllegalIdException("An pet with this name already exists, please try again");
+				throw new IllegalIdException("A pet with this name already exists, please try again");
 			}
 			else{
 				
 				pets.add(new Pet(id, name, birthdate, petType));
-				msg = "The pet was added successfully";
 				savePets();
+				msg = "The pet was added successfully";
+				
 			}
 		}
 		catch(IllegalIdException e){

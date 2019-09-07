@@ -312,7 +312,7 @@ public class Menu{
 				
 			case 2:
 				
-				registerOwnerMenu();
+				deletePetMenu();
 				
 				break;
 
@@ -394,7 +394,7 @@ public class Menu{
 		
 		String name;
 		
-		System.out.println("Please enter the id or the name of the club do you wish to delete");
+		System.out.println("Please enter the name of the pet do you wish to delete");
 		name = scanner.nextLine();
 		
 		System.out.println(currentOwner.deletePet(name) + "\n");
