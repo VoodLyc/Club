@@ -364,6 +364,7 @@ public class Menu{
 	public void registerPetMenu(){
 		
 		String id, name, birthdate, petType;
+		char gender;
 		int day, month, year;
 		
 		System.out.println("Please enter the pet's id");
@@ -381,13 +382,16 @@ public class Menu{
 		System.out.println("Please enter the pet's birth year (Example: 2015)");
 		year = validateInt(1700, 2300);
 
-		birthdate = day + "/" + month + "/" + year; 
+		birthdate = day + "/" + month + "/" + year;
+		
+		System.out.println("Please enter the pet's gender");
+		gender = validateChar();
 		
 		System.out.println("Please enter the pet's type");
 		petType = scanner.nextLine();
 
 			
-		System.out.println(currentOwner.addPets(id, name, birthdate, petType) + "\n");
+		System.out.println(currentOwner.addPets(id, name, birthdate, gender, petType) + "\n");
 	}
 	
 	public void deletePetMenu(){
@@ -430,5 +434,46 @@ public class Menu{
 		}
 		
 		return num;
+	}
+	
+	public char validateChar(){
+		
+		boolean running = true;
+		int choice = 0;
+		char gender = 0;
+		
+		while(running){
+			
+			System.out.println("Please select the pet's gender");
+			System.out.println("1. Male");
+			System.out.println("2. Female");
+			
+			try{
+				
+				choice = scanner.nextInt();
+			}
+			catch(InputMismatchException e){
+				
+				scanner.next();
+			}
+			
+			if(choice == 1){
+				
+				gender = 'M';
+				running = false;
+			}
+			else if(choice == 2){
+				
+				gender = 'F';
+				running = false;
+			}
+			else{
+				
+				System.out.print("Invalid number, please try again\n");
+				
+			}
+		}
+		
+		return gender;
 	}
 }

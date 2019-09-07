@@ -118,6 +118,12 @@ public class Owner implements Serializable, Comparable<Owner> {
 		}
 	}
 	
+	/**
+	 *<b>Description:</b> This method allows deleting a pet of the pets ArrayList by the name.<br>
+	 *@param id The pet's id.
+	 *@return A message that indicates if the owner was deleted or not.
+	 */
+	
 	public String deletePet(String name){
 		
 		String msg = "The pet could not be found, please try again";
@@ -165,7 +171,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 	 *@throws IllegalIdException If the pet that will be added have a equals name that other pet already added.
 	 */
 	
-	public String addPets(String id, String name, String birthdate, String petType){
+	public String addPets(String id, String name, String birthdate, char gender, String petType){
 		
 		String msg = "";
 		
@@ -177,7 +183,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 			}
 			else{
 				
-				pets.add(new Pet(id, name, birthdate, petType));
+				pets.add(new Pet(id, name, birthdate, gender, petType));
 				savePets();
 				msg = "The pet was added successfully";
 				
@@ -262,7 +268,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 	}
 	
 	/**
-	 *<b>Description:</b> This method allows comparing a owner with other owner by the creationDate.<br>
+	 *<b>Description:</b> This method allows comparing a owner with other owner by the birthdate.<br>
 	 *@param owner The owner with which it compares.
 	 *@return 0 if the birthdates are equals, 1  if the onwer's birthdate is major than the owner's birthdate which it compares, -1 if the owner's birthdate is minor than the owner's birthdate which it compares.
 	 */
@@ -330,12 +336,12 @@ public class Owner implements Serializable, Comparable<Owner> {
 	}
 	
 	/**
-	 *<b>Description:</b> This method allows comparing a club with other club by the id.<br>
-	 *@param club The club with which it compares.
-	 *@return 0 if the IDs are equals, 1  if the club's id is major than the club's id which it compares, -1 if the club's id is minor than the club's id which it compares.
+	 *<b>Description:</b> This method allows comparing a owner with other owner by the favoritePet.<br>
+	 *@param owner The owner with which it compares.
+	 *@return 0 if the favoritePets are equals, 1  if the owner's favoritePet is major than the owner's favoritePet which it compares, -1 if the owner's favoritePet is minor than the owner's favoritePet which it compares.
 	 */
 	
-	public int compareByPetType(Owner owner){
+	public int compareByFavoritePet(Owner owner){
 		
 		int result = 0;
 		
@@ -349,6 +355,42 @@ public class Owner implements Serializable, Comparable<Owner> {
 		}
 		
 		return result;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows comparing a pet with other pet by the number of pets.<br>
+	 *@param pet The pet with which it compares.
+	 *@return 0 if the number of pets is equals, 1  if the owner's number of pets is major than the owner's number of pets which it compares, -1 if the owner's number of pets is minor than the owner's number of pets which it compares.
+	 */
+	
+	public int compareByNumberOfPets(Owner owner){
+		
+		int result = 0;
+		
+		if(getNumberOfPets() > owner.getNumberOfPets()){
+			
+			result = 1;
+		}
+		else if(getNumberOfPets() < owner.getNumberOfPets()){
+			
+			result = -1;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows getting the owner's number of pets.<br>
+	 *@return A int with the number of pets.
+	 */
+	
+	public int getNumberOfPets(){
+		
+		int numberOfPets = 0;
+		
+		numberOfPets = pets.size();
+		
+		return numberOfPets;
 	}
 	
 	/**

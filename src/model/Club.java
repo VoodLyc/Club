@@ -470,6 +470,42 @@ public class Club implements Comparator<Club>{
 		
 		return result;
 	}
+	
+	/**
+	 *<b>Description:</b> This method allows comparing a club with other club by the number of owners.<br>
+	 *@param club The club with which it compares.
+	 *@return 0 if the number of owners is equals, 1  if the club's number of owners is major than the club's number of owners which it compares, -1 if the club's number of owners is minor than the club's number of owners which it compares.
+	 */
+	
+	public int compareByNumberOfOwners(Club club){
+		
+		int result = 0;
+		
+		if(getNumberOfOwners() > club.getNumberOfOwners()){
+			
+			result = 1;
+		}
+		else if(getNumberOfOwners() < club.getNumberOfOwners()){
+			
+			result = -1;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows getting the club's number of owners.<br>
+	 *@return A int with the number of owners.
+	 */
+	
+	public int getNumberOfOwners(){
+		
+		int numberOfOwners = 0; 
+		
+		numberOfOwners = owners.size();
+		
+		return numberOfOwners;
+	}
 
 	/**
 	 *<b>Description:</b> This method allows returning the attribute name.<br>

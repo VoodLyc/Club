@@ -270,6 +270,135 @@ public class ClubsManagementSystem {
 			writer.close();
 	}
 	
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the clubs from minor to major by the id.<br>
+	 *<b>Post:</b> The clubs are sorted by id from minor to major.<br>
+	 */
+	
+	public void sortClubsById(){
+		
+		for(int i = 0; i < clubs.size() -1; i++){
+			
+			Club minor = clubs.get(i);
+			int minorPos = i;
+			
+			for(int j = i + 1; j < clubs.size(); j++){
+				
+				Club actual = clubs.get(j);
+				
+				if(actual.compare(actual, minor) < 0){
+					
+					minor = actual;					
+					minorPos = j;
+				}
+			}
+			
+			Club tmp = clubs.get(i);
+			clubs.set(i, minor);
+			clubs.set(minorPos, tmp);
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the clubs from minor to major by the name.<br>
+	 *<b>Post:</b> The clubs are sorted by name from minor to major.<br>
+	 */
+	
+	public void sortClubsByName(){
+		
+		boolean added = false;
+		
+		for(int i = 1; i < clubs.size(); i++){
+			for(int j = i; j > 0 && !added; j--){
+				
+				Club one = clubs.get(j);
+				Club two = clubs.get(j-1);
+				
+				if(one.compareByName(two) < 0){
+					
+					clubs.set(j, one);
+					clubs.set(j - 1, two);					
+				}
+				else{
+					
+					added = true;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the clubs from minor to major by the creationDate.<br>
+	 *<b>Post:</b> The clubs are sorted by creationDate from minor to major.<br>
+	 */
+	
+	public void sortByCreationDate(){
+		
+		for(int i = clubs.size(); i > 0; i--){
+			
+			for(int j = 0; j < i - 1; j++){
+				
+				if(clubs.get(j).compareByCreationDate(clubs.get(j+1)) > 0){
+					
+					Club tmp = clubs.get(j);
+					clubs.set(j, clubs.get(j+1));
+					clubs.set(j+1, tmp);
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the clubs from minor to major by the petType.<br>
+	 *<b>Post:</b> The clubs are sorted by petType from minor to major.<br>
+	 */
+	
+	public void sortByPetType(){
+		
+		for(int i = clubs.size(); i > 0; i--){
+			
+			for(int j = 0; j < i - 1; j++){
+				
+				if(clubs.get(j).compareByPetType(clubs.get(j+1)) > 0){
+					
+					Club tmp = clubs.get(j);
+					clubs.set(j, clubs.get(j+1));
+					clubs.set(j+1, tmp);
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the clubs from minor to major by the number of pets.<br>
+	 *<b>Post:</b> The clubs are sorted by number of pets from minor to major.<br>
+	 */
+	
+	public void sortClubsByNumberOfOwners(){
+		
+		boolean added = false;
+		
+		for(int i = 1; i < clubs.size(); i++){
+			for(int j = i; j > 0 && !added; j--){
+				
+				Club one = clubs.get(j);
+				Club two = clubs.get(j-1);
+				
+				if(one.compareByNumberOfOwners(two) < 0){
+					
+					clubs.set(j, one);
+					clubs.set(j - 1, two);					
+				}
+				else{
+					
+					added = true;
+				}
+			}
+		}
+	}
+	
+	
 	/**
 	 *<b>Description:</b> This method allows getting the id of a club by the argument and remove it from the ArrayList.<br>
 	 * @param arg The name or the id of the club.

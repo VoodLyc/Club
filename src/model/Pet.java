@@ -14,6 +14,7 @@ public class Pet implements Serializable {
 	private String id;
 	private String name;
 	private String birthdate;
+	private char gender;
 	private String petType;
 
 //Constructor
@@ -25,10 +26,11 @@ public class Pet implements Serializable {
 	*@param id The pet's identification.
 	*@param name The pet's name.
 	*@param birthdate The pet's birthdate.
+	*@param gender The pet's gender.
 	*@param petType The pet's type.
 	*/
 
-	public Pet(String id, String name, String birthdate, String petType){
+	public Pet(String id, String name, String birthdate, char gender, String petType){
 
 		this.id = id;
 		this.name = name;
@@ -85,7 +87,7 @@ public class Pet implements Serializable {
 	}
 	
 	/**
-	 *<b>Description:</b> This method allows comparing a pet with other pet by the creationDate.<br>
+	 *<b>Description:</b> This method allows comparing a pet with other pet by the birthdate.<br>
 	 *@param pet The pet with which it compares.
 	 *@return 0 if the birthdates are equals, 1  if the pet's birthdate is major than the pet's birthdate which it compares, -1 if the pet's birthdate is minor than the pet's birthdate which it compares.
 	 */
@@ -153,9 +155,31 @@ public class Pet implements Serializable {
 	}
 	
 	/**
-	 *<b>Description:</b> This method allows comparing a pet with other pet by the id.<br>
+	 *<b>Description:</b> This method allows comparing a pet with other pet by the gender.<br>
 	 *@param pet The pet with which it compares.
-	 *@return 0 if the IDs are equals, 1  if the pet's id is major than the pet's id which it compares, -1 if the pet's id is minor than the pet's id which it compares.
+	 *@return 0 if the genders are equals, 1  if the pet's gender is major than the pet's gender which it compares, -1 if the pet's gender is minor than the pet's gender which it compares.
+	 */
+	
+	public int compareByGender(Pet pet){
+		
+		int result = 0;
+		
+		if(gender > pet.getGender()){
+			
+			result = 1;
+		}
+		else if(gender < pet.getGender()){
+			
+			result = -1;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows comparing a pet with other pet by the petType.<br>
+	 *@param pet The pet with which it compares.
+	 *@return 0 if the IDs are equals, 1  if the pet's type is major than the pet's type which it compares, -1 if the pet's type is minor than the pet's type which it compares.
 	 */
 	
 	public int compareByPetType(Pet pet){
@@ -190,6 +214,15 @@ public class Pet implements Serializable {
 
 	public String getBirthdate(){
 		return birthdate;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows returning the attribute gender<br>
+	 * @return The attribute gender.
+	 */
+
+	public char getGender(){
+		return gender;
 	}
 	
 	/**
