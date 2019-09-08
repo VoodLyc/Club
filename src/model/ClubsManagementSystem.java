@@ -333,10 +333,9 @@ public class ClubsManagementSystem {
 	 *<b>Post:</b> The clubs are sorted by creationDate from minor to major.<br>
 	 */
 	
-	public void sortByCreationDate(){
+	public void sortClubsByCreationDate(){
 		
-		for(int i = clubs.size(); i > 0; i--){
-			
+		for(int i = clubs.size(); i > 0; i--){	
 			for(int j = 0; j < i - 1; j++){
 				
 				if(clubs.get(j).compareByCreationDate(clubs.get(j+1)) > 0){
@@ -354,10 +353,9 @@ public class ClubsManagementSystem {
 	 *<b>Post:</b> The clubs are sorted by petType from minor to major.<br>
 	 */
 	
-	public void sortByPetType(){
+	public void sortClubsByPetType(){
 		
-		for(int i = clubs.size(); i > 0; i--){
-			
+		for(int i = clubs.size(); i > 0; i--){	
 			for(int j = 0; j < i - 1; j++){
 				
 				if(clubs.get(j).compareByPetType(clubs.get(j+1)) > 0){
@@ -421,5 +419,147 @@ public class ClubsManagementSystem {
 		}
 		
 		return id;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the clubs sorted by the id.<br>
+	 * @return A list wit the clubs sorted by id.
+	 */
+	
+	public String clubsSortListById(){
+		
+		String list = "";
+		
+		sortClubsById();
+		
+		for(Club club : clubs){
+			
+			list += club.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the clubs sorted by the name.<br>
+	 * @return A list wit the clubs sorted by name.
+	 */
+	
+	public String clubsSortListByName(){
+		
+		String list = "";
+		
+		sortClubsByName();
+		
+		for(Club club : clubs){
+			
+			list += club.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the clubs sorted by the creationDate.<br>
+	 * @return A list wit the clubs sorted by creationDate.
+	 */
+	
+	public String clubsSortListByCreationDate(){
+		
+		String list = "";
+		
+		sortClubsByCreationDate();
+		
+		for(Club club : clubs){
+			
+			list += club.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the clubs sorted by the petType.<br>
+	 * @return A list wit the clubs sorted by petType.
+	 */
+	
+	public String clubsSortListByPetType(){
+		
+		String list = "";
+		
+		sortClubsByPetType();
+		
+		for(Club club : clubs){
+			
+			list += club.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the clubs sorted by the number of owners.<br>
+	 * @return A list wit the clubs sorted by number of owners.
+	 */
+	
+	public String clubsSortListByNumberOfOwners(){
+		
+		String list = "";
+		
+		sortClubsByNumberOfOwners();
+		
+		for(Club club : clubs){
+			
+			list += club.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description</b> This method allows showing a sort list of the clubs by whatever criterion.<br>
+	 *@param typeOfList The criterion.
+	 *@return A sort list of the club by the criterion.
+	 */
+	
+	public String clubSortList(int typeOfList){
+		
+		String list = "";
+		
+		switch(typeOfList){
+			
+		case 1:
+			
+			list = clubsSortListById();
+			
+			break;
+			
+		case 2:
+			
+			list = clubsSortListByName();
+			
+			break;
+			
+		case 3:
+			
+			list = clubsSortListByCreationDate();
+			
+			break;
+			
+		case 4:
+			
+			list = clubsSortListByPetType();
+			
+			break;
+			
+		case 5:
+			
+			list = clubsSortListByNumberOfOwners();
+			
+			break;
+		
+		}
+			
+		return list;
 	}
 }

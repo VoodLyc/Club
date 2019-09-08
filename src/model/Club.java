@@ -66,7 +66,7 @@ public class Club implements Comparator<Club>{
 			file = new File("data/Clubs.txt");
 			
 			data += readClubsData();
-			data += toString();
+			data += getData();
 
 			PrintWriter writer = new PrintWriter(file);
 			writer.append(data);
@@ -86,14 +86,31 @@ public class Club implements Comparator<Club>{
 	*@return A String with the company's attributes.
 	*/
 	
+	public String getData(){
+		
+		String data = "";
+		
+		data += id + "\n";
+		data += name + "\n";
+		data += creationDate + "\n";
+		data += petType;
+		
+		return data;
+	}
+	
+	/**
+	*<b>Description:</b> This method allows converting the club's attributes in a String.<br>
+	*@return A String with the company's attributes.
+	*/
+	
 	public String toString(){
 		
 		String toString = "";
 		
-		toString += id + "\n";
-		toString += name + "\n";
-		toString += creationDate + "\n";
-		toString += petType;
+		toString = "ID: " + id + "\n";
+		toString = "Full name: " + name + "\n";
+		toString = "Creation date: " + creationDate + "\n";
+		toString = "Pet type : " + petType + "\n";
 		
 		return toString;
 	}
@@ -505,6 +522,283 @@ public class Club implements Comparator<Club>{
 		numberOfOwners = owners.size();
 		
 		return numberOfOwners;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the owners from minor to major by the id.<br>
+	 *<b>Post:</b> The owners are sorted by id from minor to major.<br>
+	 */
+	
+	public void sortOwnersById(){
+		
+		boolean added = false;
+		
+		for(int i = 1; i < owners.size(); i++){
+			for(int j = i; j > 0 && !added; j--){
+				
+				Owner one = owners.get(j);
+				Owner two = owners.get(j-1);
+				
+				if(one.compareTo(two) < 0){
+					
+					owners.set(j, one);
+					owners.set(j - 1, two);					
+				}
+				else{
+					
+					added = true;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the owners from minor to major by the name.<br>
+	 *<b>Post:</b> The owners are sorted by name from minor to major.<br>
+	 */
+	
+	public void sortOwnersByName(){
+		
+		for(int i = 0; i < owners.size() -1; i++){
+			
+			Owner minor = owners.get(i);
+			int minorPos = i;
+			
+			for(int j = i + 1; j < owners.size(); j++){
+				
+				Owner actual = owners.get(j);
+				
+				if(actual.compareByName(minor) < 0){
+					
+					minor = actual;					
+					minorPos = j;
+				}
+			}
+			
+			Owner tmp = owners.get(i);
+			owners.set(i, minor);
+			owners.set(minorPos, tmp);
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the owners from minor to major by the birthdate.<br>
+	 *<b>Post:</b> The owners are sorted by birthdate from minor to major.<br>
+	 */
+	
+	public void sortOwnersByBirthdate(){
+		
+		for(int i = owners.size(); i > 0; i--){	
+			for(int j = 0; j < i - 1; j++){
+				
+				if(owners.get(j).compareByBirthdate(owners.get(j+1)) > 0){
+					
+					Owner tmp = owners.get(j);
+					owners.set(j, owners.get(j+1));
+					owners.set(j+1, tmp);
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the owners from minor to major by the favoritePet.<br>
+	 *<b>Post:</b> The owners are sorted by favoritePet from minor to major.<br>
+	 */
+	
+	public void sortOwnersByFavoritePet(){
+		
+		boolean added = false;
+		
+		for(int i = 1; i < owners.size(); i++){
+			for(int j = i; j > 0 && !added; j--){
+				
+				Owner one = owners.get(j);
+				Owner two = owners.get(j-1);
+				
+				if(one.compareByFavoritePet(two) < 0){
+					
+					owners.set(j, one);
+					owners.set(j - 1, two);					
+				}
+				else{
+					
+					added = true;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the owners from minor to major by the number of pets.<br>
+	 *<b>Post:</b> The owners are sorted by number of pets from minor to major.<br>
+	 */
+	
+	public void sortOwnersByNumberOfPets(){
+		
+		boolean added = false;
+		
+		for(int i = 1; i < owners.size(); i++){
+			for(int j = i; j > 0 && !added; j--){
+				
+				Owner one = owners.get(j);
+				Owner two = owners.get(j-1);
+				
+				if(one.compareByNumberOfPets(two) < 0){
+					
+					owners.set(j, one);
+					owners.set(j - 1, two);					
+				}
+				else{
+					
+					added = true;
+				}
+			}
+		}
+	}
+	
+	
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the owners sorted by the id.<br>
+	 * @return A list wit the owners sorted by id.
+	 */
+	
+	public String ownersSortListById(){
+		
+		String list = "";
+		
+		sortOwnersById();
+		
+		for(Owner owner : owners){
+			
+			list += owner.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the owners sorted by the name.<br>
+	 * @return A list wit the owners sorted by name.
+	 */
+	
+	public String ownersSortListByName(){
+		
+		String list = "";
+		
+		sortOwnersByName();
+		
+		for(Owner owner : owners){
+			
+			list += owner.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the owners sorted by the birthdate.<br>
+	 * @return A list wit the owners sorted by birthdate.
+	 */
+	
+	public String ownersSortListByBirthdate(){
+		
+		String list = "";
+		
+		sortOwnersByBirthdate();
+		
+		for(Owner owner : owners){
+			
+			list += owner.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the owners sorted by the favoritePet.<br>
+	 * @return A list wit the owners sorted by favoritePet.
+	 */
+	
+	public String ownersSortListByFavoritePet(){
+		
+		String list = "";
+		
+		sortOwnersByFavoritePet();
+		
+		for(Owner owner : owners){
+			
+			list += owner.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the owners sorted by the number of pets.<br>
+	 * @return A list wit the owners sorted by number of pets.
+	 */
+	
+	public String ownersSortListByNumberOfPets(){
+		
+		String list = "";
+		
+		sortOwnersByFavoritePet();
+		
+		for(Owner owner : owners){
+			
+			list += owner.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description</b> This method allows showing a sort list of the clubs by whatever criterion.<br>
+	 *@param typeOfList The criterion.
+	 *@return A sort list of the club by the criterion.
+	 */
+	
+	public String ownerSortList(int typeOfList){
+		
+		String list = "";
+		
+		switch(typeOfList){
+			
+		case 1:
+			
+			list = ownersSortListById();
+			
+			break;
+			
+		case 2:
+			
+			list = ownersSortListByName();
+			
+			break;
+			
+		case 3:
+			
+			list = ownersSortListByBirthdate();
+			
+			break;
+			
+		case 4:
+			
+			list = ownersSortListByFavoritePet();
+			
+			break;
+			
+		case 5:
+			
+			list = ownersSortListByNumberOfPets();
+			
+			break;
+		
+		}
+			
+		return list;
 	}
 
 	/**

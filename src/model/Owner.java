@@ -394,6 +394,299 @@ public class Owner implements Serializable, Comparable<Owner> {
 	}
 	
 	/**
+	 *<b>Description:</b> This method allows sorting the pets from minor to major by the id.<br>
+	 *<b>Post:</b> The owners are sorted by id from minor to major.<br>
+	 */
+	
+	public void sortPetsById(){
+		
+		for(int i = pets.size(); i > 0; i--){	
+			for(int j = 0; j < i - 1; j++){
+				
+				if(pets.get(j).compareById(pets.get(j+1)) > 0){
+					
+					Pet tmp = pets.get(j);
+					pets.set(j, pets.get(j+1));
+					pets.set(j+1, tmp);
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the pets from minor to major by the name.<br>
+	 *<b>Post:</b> The owners are sorted by name from minor to major.<br>
+	 */
+	
+	public void sortPetsByName(){
+		
+		for(int i = 0; i < pets.size() -1; i++){
+			
+			Pet minor = pets.get(i);
+			int minorPos = i;
+			
+			for(int j = i + 1; j < pets.size(); j++){
+				
+				Pet actual = pets.get(j);
+				
+				if(actual.compareByName(minor) < 0){
+					
+					minor = actual;					
+					minorPos = j;
+				}
+			}
+			
+			Pet tmp = pets.get(i);
+			pets.set(i, minor);
+			pets.set(minorPos, tmp);
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the pets from minor to major by the birthdate.<br>
+	 *<b>Post:</b> The owners are sorted by name from minor to major.<br>
+	 */
+	
+	public void sortPetsByBirthdate(){
+		
+		boolean added = false;
+		
+		for(int i = 1; i < pets.size(); i++){
+			for(int j = i; j > 0 && !added; j--){
+				
+				Pet one = pets.get(j);
+				Pet two = pets.get(j-1);
+				
+				if(one.compareByBirthdate(two) < 0){
+					
+					pets.set(j, one);
+					pets.set(j - 1, two);					
+				}
+				else{
+					
+					added = true;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the pets from minor to major by the gender.<br>
+	 *<b>Post:</b> The owners are sorted by gender from minor to major.<br>
+	 */
+	
+	public void sortPetsByGender(){
+		
+		for(int i = 0; i < pets.size() -1; i++){
+			
+			Pet minor = pets.get(i);
+			int minorPos = i;
+			
+			for(int j = i + 1; j < pets.size(); j++){
+				
+				Pet actual = pets.get(j);
+				
+				if(actual.compareByGender(minor) < 0){
+					
+					minor = actual;					
+					minorPos = j;
+				}
+			}
+			
+			Pet tmp = pets.get(i);
+			pets.set(i, minor);
+			pets.set(minorPos, tmp);
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows sorting the pets from minor to major by the petType.<br>
+	 *<b>Post:</b> The owners are sorted by petType from minor to major.<br>
+	 */
+	
+	public void sortPetsByPetType(){
+		
+		boolean added = false;
+		
+		for(int i = 1; i < pets.size(); i++){
+			for(int j = i; j > 0 && !added; j--){
+				
+				Pet one = pets.get(j);
+				Pet two = pets.get(j-1);
+				
+				if(one.compareByPetType(two) < 0){
+					
+					pets.set(j, one);
+					pets.set(j - 1, two);					
+				}
+				else{
+					
+					added = true;
+				}
+			}
+		}
+	}
+	
+	/**
+	*<b>Description:</b> This method allows converting the owner's attributes in a String.<br>
+	*@return A String with owner's attributes.
+	*/
+	
+	public String toString(){
+		
+		String toString = "";
+		
+		toString += "ID: " + id + "\n";
+		toString += "Full name: " + name + "\n";
+		toString += "Birthdate: " + birthdate + "\n";
+		toString += "Favorite pet: " + favoritePet + "\n";
+		
+		return toString;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the pets sorted by the id.<br>
+	 * @return A list wit the pets sorted by id.
+	 */
+	
+	public String petsSortListById(){
+		
+		String list = "";
+		
+		sortPetsById();
+		
+		for(Pet pet : pets){
+			
+			list += pet.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the pets sorted by the name.<br>
+	 * @return A list wit the pets sorted by name.
+	 */
+	
+	public String petsSortListByName(){
+		
+		String list = "";
+		
+		sortPetsByName();
+		
+		for(Pet pet : pets){
+			
+			list += pet.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the pets sorted by the birthdate.<br>
+	 * @return A list wit the pets sorted by birthdate.
+	 */
+	
+	public String petsSortListByBirthdate(){
+		
+		String list = "";
+		
+		sortPetsByBirthdate();
+		
+		for(Pet pet : pets){
+			
+			list += pet.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the pets sorted by the gender.<br>
+	 * @return A list wit the pets sorted by gender.
+	 */
+	
+	public String petsSortListByGender(){
+		
+		String list = "";
+		
+		sortPetsByGender();
+		
+		for(Pet pet : pets){
+			
+			list += pet.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows creating a list with the pets sorted by the petType.<br>
+	 * @return A list wit the pets sorted by petType.
+	 */
+	
+	public String petsSortListByPetType(){
+		
+		String list = "";
+		
+		sortPetsByPetType();
+		
+		for(Pet pet : pets){
+			
+			list += pet.toString();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description</b> This method allows showing a sort list of the clubs by whatever criterion.<br>
+	 *@param typeOfList The criterion.
+	 *@return A sort list of the club by the criterion.
+	 */
+	
+	public String ownerSortList(int typeOfList){
+		
+		String list = "";
+		
+		switch(typeOfList){
+			
+		case 1:
+			
+			list = petsSortListById();
+			
+			break;
+			
+		case 2:
+			
+			list = petsSortListByName();
+			
+			break;
+			
+		case 3:
+			
+			list = petsSortListByBirthdate();
+			
+			break;
+			
+		case 4:
+			
+			list = petsSortListByGender();
+			
+			break;
+			
+		case 5:
+			
+			list = petsSortListByPetType();
+			
+			break;
+		
+		}
+			
+		return list;
+	}
+	
+	/**
 	 *<b>Description:</b> This method allows returning the attribute name<br>
 	 * @return The attribute name.
 	 */
