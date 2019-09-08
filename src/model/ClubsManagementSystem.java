@@ -306,24 +306,15 @@ public class ClubsManagementSystem {
 	 */
 	
 	public void sortClubsByName(){
-		
-		boolean added = false;
-		
+			
 		for(int i = 1; i < clubs.size(); i++){
-			for(int j = i; j > 0 && !added; j--){
+			for(int j = i - 1; j >= 0 && clubs.get(j).compareByName(clubs.get(j+1)) > 0; j--){
 				
 				Club one = clubs.get(j);
-				Club two = clubs.get(j-1);
+				Club two = clubs.get(j+1);
 				
-				if(one.compareByName(two) < 0){
-					
-					clubs.set(j, one);
-					clubs.set(j - 1, two);					
-				}
-				else{
-					
-					added = true;
-				}
+				clubs.set(j, two);
+				clubs.set(j+1, one);
 			}
 		}
 	}
@@ -375,23 +366,14 @@ public class ClubsManagementSystem {
 	
 	public void sortClubsByNumberOfOwners(){
 		
-		boolean added = false;
-		
 		for(int i = 1; i < clubs.size(); i++){
-			for(int j = i; j > 0 && !added; j--){
+			for(int j = i - 1; j >= 0 && clubs.get(j).compareByNumberOfOwners(clubs.get(j+1)) > 0; j--){
 				
 				Club one = clubs.get(j);
-				Club two = clubs.get(j-1);
+				Club two = clubs.get(j+1);
 				
-				if(one.compareByNumberOfOwners(two) < 0){
-					
-					clubs.set(j, one);
-					clubs.set(j - 1, two);					
-				}
-				else{
-					
-					added = true;
-				}
+				clubs.set(j, two);
+				clubs.set(j+1, one);
 			}
 		}
 	}
@@ -434,7 +416,7 @@ public class ClubsManagementSystem {
 		
 		for(Club club : clubs){
 			
-			list += club.toString();
+			list += club.toString() + "\n";
 		}
 		
 		return list;
@@ -453,7 +435,7 @@ public class ClubsManagementSystem {
 		
 		for(Club club : clubs){
 			
-			list += club.toString();
+			list += club.toString() + "\n";
 		}
 		
 		return list;
@@ -472,7 +454,7 @@ public class ClubsManagementSystem {
 		
 		for(Club club : clubs){
 			
-			list += club.toString();
+			list += club.toString() + "\n";
 		}
 		
 		return list;
@@ -491,7 +473,7 @@ public class ClubsManagementSystem {
 		
 		for(Club club : clubs){
 			
-			list += club.toString();
+			list += club.toString() + "\n";
 		}
 		
 		return list;
@@ -510,7 +492,7 @@ public class ClubsManagementSystem {
 		
 		for(Club club : clubs){
 			
-			list += club.toString();
+			list += club.toString() + "\n";
 		}
 		
 		return list;
@@ -519,7 +501,7 @@ public class ClubsManagementSystem {
 	/**
 	 *<b>Description</b> This method allows showing a sort list of the clubs by whatever criterion.<br>
 	 *@param typeOfList The criterion.
-	 *@return A sort list of the club by the criterion.
+	 *@return A sort list of the clubs by the criterion.
 	 */
 	
 	public String clubSortList(int typeOfList){

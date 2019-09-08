@@ -557,7 +557,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		
 		for(Pet pet : pets){
 			
-			list += pet.toString();
+			list += pet.toString() + "\n";
 		}
 		
 		return list;
@@ -576,7 +576,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		
 		for(Pet pet : pets){
 			
-			list += pet.toString();
+			list += pet.toString() + "\n";
 		}
 		
 		return list;
@@ -595,7 +595,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		
 		for(Pet pet : pets){
 			
-			list += pet.toString();
+			list += pet.toString() + "\n";
 		}
 		
 		return list;
@@ -614,7 +614,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		
 		for(Pet pet : pets){
 			
-			list += pet.toString();
+			list += pet.toString() + "\n";
 		}
 		
 		return list;
@@ -633,19 +633,19 @@ public class Owner implements Serializable, Comparable<Owner> {
 		
 		for(Pet pet : pets){
 			
-			list += pet.toString();
+			list += pet.toString() + "\n";
 		}
 		
 		return list;
 	}
 	
 	/**
-	 *<b>Description</b> This method allows showing a sort list of the clubs by whatever criterion.<br>
+	 *<b>Description</b> This method allows showing a sort list of the pets by whatever criterion.<br>
 	 *@param typeOfList The criterion.
-	 *@return A sort list of the club by the criterion.
+	 *@return A sort list of the pets by the criterion.
 	 */
 	
-	public String ownerSortList(int typeOfList){
+	public String petsSortList(int typeOfList){
 		
 		String list = "";
 		

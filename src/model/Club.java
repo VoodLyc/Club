@@ -107,10 +107,10 @@ public class Club implements Comparator<Club>{
 		
 		String toString = "";
 		
-		toString = "ID: " + id + "\n";
-		toString = "Full name: " + name + "\n";
-		toString = "Creation date: " + creationDate + "\n";
-		toString = "Pet type : " + petType + "\n";
+		toString += "ID: " + id + "\n";
+		toString += "Name: " + name + "\n";
+		toString += "Creation date: " + creationDate + "\n";
+		toString += "Pet type : " + petType + "\n";
 		
 		return toString;
 	}
@@ -531,23 +531,14 @@ public class Club implements Comparator<Club>{
 	
 	public void sortOwnersById(){
 		
-		boolean added = false;
-		
 		for(int i = 1; i < owners.size(); i++){
-			for(int j = i; j > 0 && !added; j--){
+			for(int j = i - 1; j >= 0 && owners.get(j).compareTo(owners.get(j+1)) > 0; j--){
 				
 				Owner one = owners.get(j);
-				Owner two = owners.get(j-1);
+				Owner two = owners.get(j+1);
 				
-				if(one.compareTo(two) < 0){
-					
-					owners.set(j, one);
-					owners.set(j - 1, two);					
-				}
-				else{
-					
-					added = true;
-				}
+				owners.set(j, two);
+				owners.set(j+1, one);
 			}
 		}
 	}
@@ -608,26 +599,18 @@ public class Club implements Comparator<Club>{
 	
 	public void sortOwnersByFavoritePet(){
 		
-		boolean added = false;
-		
 		for(int i = 1; i < owners.size(); i++){
-			for(int j = i; j > 0 && !added; j--){
+			for(int j = i - 1; j >= 0 && owners.get(j).compareByFavoritePet(owners.get(j+1)) > 0; j--){
 				
 				Owner one = owners.get(j);
-				Owner two = owners.get(j-1);
+				Owner two = owners.get(j+1);
 				
-				if(one.compareByFavoritePet(two) < 0){
-					
-					owners.set(j, one);
-					owners.set(j - 1, two);					
-				}
-				else{
-					
-					added = true;
-				}
+				owners.set(j, two);
+				owners.set(j+1, one);
 			}
 		}
 	}
+	
 	
 	/**
 	 *<b>Description:</b> This method allows sorting the owners from minor to major by the number of pets.<br>
@@ -636,27 +619,17 @@ public class Club implements Comparator<Club>{
 	
 	public void sortOwnersByNumberOfPets(){
 		
-		boolean added = false;
-		
 		for(int i = 1; i < owners.size(); i++){
-			for(int j = i; j > 0 && !added; j--){
+			for(int j = i - 1; j >= 0 && owners.get(j).compareByNumberOfPets(owners.get(j+1)) > 0; j--){
 				
 				Owner one = owners.get(j);
-				Owner two = owners.get(j-1);
+				Owner two = owners.get(j+1);
 				
-				if(one.compareByNumberOfPets(two) < 0){
-					
-					owners.set(j, one);
-					owners.set(j - 1, two);					
-				}
-				else{
-					
-					added = true;
-				}
+				owners.set(j, two);
+				owners.set(j+1, one);
 			}
 		}
 	}
-	
 	
 	
 	/**
@@ -672,7 +645,7 @@ public class Club implements Comparator<Club>{
 		
 		for(Owner owner : owners){
 			
-			list += owner.toString();
+			list += owner.toString() + "\n";
 		}
 		
 		return list;
@@ -691,7 +664,7 @@ public class Club implements Comparator<Club>{
 		
 		for(Owner owner : owners){
 			
-			list += owner.toString();
+			list += owner.toString() + "\n";
 		}
 		
 		return list;
@@ -710,7 +683,7 @@ public class Club implements Comparator<Club>{
 		
 		for(Owner owner : owners){
 			
-			list += owner.toString();
+			list += owner.toString() + "\n";
 		}
 		
 		return list;
@@ -729,7 +702,7 @@ public class Club implements Comparator<Club>{
 		
 		for(Owner owner : owners){
 			
-			list += owner.toString();
+			list += owner.toString() + "\n";
 		}
 		
 		return list;
@@ -748,16 +721,16 @@ public class Club implements Comparator<Club>{
 		
 		for(Owner owner : owners){
 			
-			list += owner.toString();
+			list += owner.toString() + "\n";
 		}
 		
 		return list;
 	}
 	
 	/**
-	 *<b>Description</b> This method allows showing a sort list of the clubs by whatever criterion.<br>
+	 *<b>Description</b> This method allows showing a sort list of the owners by whatever criterion.<br>
 	 *@param typeOfList The criterion.
-	 *@return A sort list of the club by the criterion.
+	 *@return A sort list of the owners by the criterion.
 	 */
 	
 	public String ownerSortList(int typeOfList){

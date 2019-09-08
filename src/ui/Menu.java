@@ -56,6 +56,12 @@ public class Menu{
 
 			case 4:
 	
+				generateClubListsMenu();
+
+				break;
+				
+			case 5:
+				
 				running = false;
 
 				break;
@@ -75,7 +81,8 @@ public class Menu{
 			System.out.println("1. Enter a club");
 			System.out.println("2. Create a club");
 			System.out.println("3. Delete a club");
-			System.out.println("4. Exit");
+			System.out.println("4. Generate lists");
+			System.out.println("5. Exit");
 						
 			try{
 
@@ -87,7 +94,7 @@ public class Menu{
 				scanner.next();
 			}
 
-			if(choice > 0 && choice < 5){
+			if(choice > 0 && choice < 6){
 
 				running = false;
 			}
@@ -158,6 +165,48 @@ public class Menu{
 		}
 	}
 	
+	public void generateClubListsMenu(){
+		
+		boolean running = true;
+		int choice = 0;
+		
+		while(running){
+			
+			System.out.println("Please select the type of list do you want to generate:\n");
+			System.out.println("1. Sort list by id");
+			System.out.println("2. Sort list by name");
+			System.out.println("3. Sort list by creation date");
+			System.out.println("4. Sort list by pet type");
+			System.out.println("5. Sort list by the number of owners");
+			System.out.println("6. To return");
+			
+			try{
+				
+				choice = scanner.nextInt();
+				
+			}
+			catch(InputMismatchException e){
+				
+				scanner.next();
+			}
+			
+			if(choice > 0 && choice < 6){
+				
+				System.out.println();
+				System.out.print(clubsSystem.clubSortList(choice));
+			}
+			else if(choice == 6){
+				
+				running = false;
+			}
+			else{
+				
+				System.out.println("Please enter a correct value\n");
+			}
+			
+		}
+	}
+	
 	public void clubMenu(){
 
 		boolean running = true;
@@ -189,6 +238,12 @@ public class Menu{
 
 			case 4:
 				
+				generateOwnerListsMenu();
+
+				break;
+				
+			case 5:
+				
 				currentClub = null;
 				running = false;
 
@@ -209,7 +264,8 @@ public class Menu{
 			System.out.println("1. Enter a owner");
 			System.out.println("2. Create a owner");
 			System.out.println("3. Delete a owner");
-			System.out.println("4. To return");
+			System.out.println("4. Generate lists");
+			System.out.println("5. To return");
 						
 			try{
 
@@ -292,6 +348,48 @@ public class Menu{
 			System.out.println("The owner could not be found, please try again\n");
 		}
 	}
+	
+	public void generateOwnerListsMenu(){
+		
+		boolean running = true;
+		int choice = 0;
+		
+		while(running){
+			
+			System.out.println("Please select the type of list do you want to generate:\n");
+			System.out.println("1. Sort list by id");
+			System.out.println("2. Sort list by name");
+			System.out.println("3. Sort list by bithdate");
+			System.out.println("4. Sort list by favorite pet");
+			System.out.println("5. Sort list by the number of pets");
+			System.out.println("6. To return");
+			
+			try{
+				
+				choice = scanner.nextInt();
+				
+			}
+			catch(InputMismatchException e){
+				
+				scanner.next();
+			}
+			
+			if(choice > 0 && choice < 6){
+				
+				System.out.println();
+				System.out.print(currentClub.ownerSortList(choice));
+			}
+			else if(choice == 6){
+				
+				running = false;
+			}
+			else{
+				
+				System.out.println("Please enter a correct value\n");
+			}
+			
+		}
+	}
 		
 	public void ownerMenu(){
 
@@ -318,10 +416,16 @@ public class Menu{
 
 			case 3:
 				
+				generatePetListsMenu();
+
+				break;
+				
+			case 4:
+				
 				currentOwner = null;
 				running = false;
 
-				break;		
+				break;	
 			}
 		}	
 	}
@@ -336,7 +440,8 @@ public class Menu{
 			System.out.println("You are in the owner " + currentOwner.getId() + "\n");
 			System.out.println("1. Create a pet");
 			System.out.println("2. Delete a pet");
-			System.out.println("3. To return");
+			System.out.println("3. Generate lists");
+			System.out.println("4. To return");
 						
 			try{
 
@@ -384,12 +489,10 @@ public class Menu{
 
 		birthdate = day + "/" + month + "/" + year;
 		
-		System.out.println("Please enter the pet's gender");
-		gender = validateChar();
-		
 		System.out.println("Please enter the pet's type");
 		petType = scanner.nextLine();
-
+		
+		gender = validateChar();
 			
 		System.out.println(currentOwner.addPets(id, name, birthdate, gender, petType) + "\n");
 	}
@@ -402,6 +505,47 @@ public class Menu{
 		name = scanner.nextLine();
 		
 		System.out.println(currentOwner.deletePet(name) + "\n");
+	}
+	
+	public void generatePetListsMenu(){
+		
+		boolean running = true;
+		int choice = 0;
+		
+		while(running){
+			
+			System.out.println("Please select the type of list do you want to generate:\n");
+			System.out.println("1. Sort list by id");
+			System.out.println("2. Sort list by name");
+			System.out.println("3. Sort list by bithdate");
+			System.out.println("4. Sort list by pet type");
+			System.out.println("5. To return");
+			
+			try{
+				
+				choice = scanner.nextInt();
+				
+			}
+			catch(InputMismatchException e){
+				
+				scanner.next();
+			}
+			
+			if(choice > 0 && choice < 5){
+				
+				System.out.println();
+				System.out.print(currentOwner.petsSortList(choice));
+			}
+			else if(choice == 5){
+				
+				running = false;
+			}
+			else{
+				
+				System.out.println("Please enter a correct value\n");
+			}
+			
+		}
 	}
 
 	public int validateInt(int minimum, int max){
@@ -444,7 +588,7 @@ public class Menu{
 		
 		while(running){
 			
-			System.out.println("Please select the pet's gender");
+			System.out.println("Please select the pet's gender\n");
 			System.out.println("1. Male");
 			System.out.println("2. Female");
 			
