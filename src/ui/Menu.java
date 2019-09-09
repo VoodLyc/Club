@@ -277,7 +277,7 @@ public class Menu{
 				scanner.next();
 			}
 
-			if(choice > 0 && choice < 5){
+			if(choice > 0 && choice < 6){
 
 				running = false;
 			}
@@ -469,7 +469,7 @@ public class Menu{
 	public void registerPetMenu(){
 		
 		String id, name, birthdate, petType;
-		char gender;
+		String gender= "";
 		int day, month, year;
 		
 		System.out.println("Please enter the pet's id");
@@ -489,10 +489,10 @@ public class Menu{
 
 		birthdate = day + "/" + month + "/" + year;
 		
+		gender = validateGender();
+		
 		System.out.println("Please enter the pet's type");
 		petType = scanner.nextLine();
-		
-		gender = validateChar();
 			
 		System.out.println(currentOwner.addPets(id, name, birthdate, gender, petType) + "\n");
 	}
@@ -580,12 +580,11 @@ public class Menu{
 		return num;
 	}
 	
-	public char validateChar(){
+	public String validateGender(){
 		
 		boolean running = true;
 		int choice = 0;
-		char gender = 0;
-		
+		String gender = "";
 		while(running){
 			
 			System.out.println("Please select the pet's gender\n");
@@ -603,13 +602,15 @@ public class Menu{
 			
 			if(choice == 1){
 				
-				gender = 'M';
+				gender = "M";
 				running = false;
+				scanner.nextLine();
 			}
 			else if(choice == 2){
 				
-				gender = 'F';
+				gender = "F";
 				running = false;
+				scanner.nextLine();
 			}
 			else{
 				

@@ -81,15 +81,15 @@ public class Owner implements Serializable, Comparable<Owner> {
 		}
 		catch(FileNotFoundException e){
 			
-			System.out.println("A loading error has occurred");		
+			e.printStackTrace();		
 		} 
 		catch(IOException e){
 			
-			System.out.println("A loading error has occurred");
+			e.printStackTrace();
 		}
 		catch(ClassNotFoundException e){
 		
-			System.out.println("A loading error has occurred");
+			e.printStackTrace();
 		}
 	}
 	
@@ -111,10 +111,10 @@ public class Owner implements Serializable, Comparable<Owner> {
 		output.close();
 		}
 		catch(FileNotFoundException e){
-			System.out.println("A saving error has occurred");
+			e.printStackTrace();
 		}
 		catch(IOException e){
-			System.out.println("A saving error has occurred"); 
+			e.printStackTrace();
 		}
 	}
 	
@@ -171,7 +171,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 	 *@throws IllegalIdException If the pet that will be added have a equals name that other pet already added.
 	 */
 	
-	public String addPets(String id, String name, String birthdate, char gender, String petType){
+	public String addPets(String id, String name, String birthdate, String gender, String petType){
 		
 		String msg = "";
 		
@@ -191,7 +191,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		}
 		catch(IllegalIdException e){
 			
-			System.out.println(e.getMessage());
+			msg = e.getMessage();
 		}
 		
 		return msg;
@@ -429,7 +429,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 				
 				Pet actual = pets.get(j);
 				
-				if(actual.compareByName(minor) < 0){
+				if(actual.compareTo(minor) < 0){
 					
 					minor = actual;					
 					minorPos = j;
@@ -540,6 +540,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		toString += "Full name: " + name + "\n";
 		toString += "Birthdate: " + birthdate + "\n";
 		toString += "Favorite pet: " + favoritePet + "\n";
+		toString += "Number of pets: " + pets.size() + "\n";
 		
 		return toString;
 	}

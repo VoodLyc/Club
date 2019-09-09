@@ -6,7 +6,7 @@ import java.io.Serializable;
 *@author Johan Giraldo.
 */
 
-public class Pet implements Serializable {
+public class Pet implements Serializable, Comparable <Pet>{
 
 //Attributes
 
@@ -14,7 +14,7 @@ public class Pet implements Serializable {
 	private String id;
 	private String name;
 	private String birthdate;
-	private char gender;
+	private String gender;
 	private String petType;
 
 //Constructor
@@ -30,12 +30,13 @@ public class Pet implements Serializable {
 	*@param petType The pet's type.
 	*/
 
-	public Pet(String id, String name, String birthdate, char gender, String petType){
+	public Pet(String id, String name, String birthdate, String gender, String petType){
 
 		this.id = id;
 		this.name = name;
 		this.birthdate = birthdate;
 		this.petType = petType;
+		this.gender = gender;
 	}
 	
 //Methods
@@ -70,7 +71,7 @@ public class Pet implements Serializable {
 	 *@return 0 if the names are equals, 1  if the pet's name is major than the pet's name which it compares, -1 if the pet's name is minor than the pet's name which it compares.
 	 */
 	
-	public int compareByName(Pet pet){
+	public int compareTo(Pet pet){
 		
 		int result = 0;
 		
@@ -164,11 +165,11 @@ public class Pet implements Serializable {
 		
 		int result = 0;
 		
-		if(gender > pet.getGender()){
+		if(gender.compareTo(pet.getGender()) > 0){
 			
 			result = 1;
 		}
-		else if(gender < pet.getGender()){
+		else if(gender.compareTo(pet.getGender()) < 0){
 			
 			result = -1;
 		}
@@ -199,6 +200,24 @@ public class Pet implements Serializable {
 	}
 	
 	/**
+	*<b>Description:</b> This method allows converting the owner's attributes in a String.<br>
+	*@return A String with owner's attributes.
+	*/
+	
+	public String toString(){
+		
+		String toString = "";
+		
+		toString += "ID: " + id + "\n";
+		toString += "Full name: " + name + "\n";
+		toString += "Birthdate: " + birthdate + "\n";
+		toString += "Gender: " + gender + "\n";
+		toString += "Pet type: " + petType + "\n";
+		
+		return toString;
+	}
+	
+	/**
 	 *<b>Description:</b> This method allows returning the attribute name<br>
 	 * @return The attribute name.
 	 */
@@ -221,7 +240,7 @@ public class Pet implements Serializable {
 	 * @return The attribute gender.
 	 */
 
-	public char getGender(){
+	public String getGender(){
 		return gender;
 	}
 	

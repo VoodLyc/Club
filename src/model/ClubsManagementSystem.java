@@ -66,10 +66,10 @@ public class ClubsManagementSystem {
 			reader.close();
 		}
 		catch(FileNotFoundException e){
-			System.out.println("A loading error has occurred");
+			e.printStackTrace();
 		}
 		catch(IOException e){
-			System.out.println("A loading error has occurred");
+			e.printStackTrace();
 		}
 	}
 	
@@ -179,7 +179,7 @@ public class ClubsManagementSystem {
 		}
 		catch(IllegalIdException e){
 			
-			System.out.print(e.getMessage());
+			msg = e.getMessage();
 		}		
 		
 		return msg;
@@ -210,11 +210,11 @@ public class ClubsManagementSystem {
 		
 		}
 		catch (FileNotFoundException e){
-			System.out.println("A deleting error has occurred");
+			e.printStackTrace();
 		}
 		catch(IOException e){
-			
-			System.out.println("A deleting error has occurred");
+		
+			e.printStackTrace();
 		}
 		
 		return msg;
@@ -308,7 +308,7 @@ public class ClubsManagementSystem {
 	public void sortClubsByName(){
 			
 		for(int i = 1; i < clubs.size(); i++){
-			for(int j = i - 1; j >= 0 && clubs.get(j).compareByName(clubs.get(j+1)) > 0; j--){
+			for(int j = i - 1; j >= 0 && clubs.get(j).compare(clubs.get(i), clubs.get(j+1)) > 0; j--){
 				
 				Club one = clubs.get(j);
 				Club two = clubs.get(j+1);
@@ -543,5 +543,395 @@ public class ClubsManagementSystem {
 		}
 			
 		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a binary search for the clubs who match with the id.<br>
+	 * @return A list with the clubs that match with the id.
+	 */
+	
+	public String binarySearchById(String id){
+	 
+		boolean found = false;
+		String list = "";
+		int start = 0;
+		int end = clubs.size() - 1;
+		Club club = new Club(id, "", "", "");
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if (clubs.get(middle).compare(clubs.get(middle), club) == 0){
+				
+				list += clubs.get(middle).toString() + "\n";
+				found = true;
+			}
+			if(clubs.get(middle).compare(clubs.get(middle), club) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}	
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the clubs who match with the id.<br>
+	 * @return A list with the clubs that match with the id.
+	 */
+	
+	public void sequentialSearchById(String id){
+		
+		Club club;
+		boolean running = true;
+		club = new Club(id, "", "", "");
+		
+		for(int i = 0; i < clubs.size() - 1 && running; i++){
+			
+			if(clubs.get(i).compare(clubs.get(i),club) == 0){
+				
+				if(clubs.get(i+1).compare(clubs.get(i+1), club) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @return A list with the clubs that match with the name.
+	 */
+	
+	public String searchByNameLeft(int index, Club club){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index - 1; i > 0 && is; i--){
+			
+			if(clubs.get(i).compare(clubs.get(i), club) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += clubs.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @return A list with the clubs that match with the name.
+	 */
+	
+	public String searchByNameRight(int index, Club club){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index + 1; i > clubs.size() && is; i++){
+			
+			if(clubs.get(i).compare(clubs.get(i), club) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += clubs.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching for the clubs who match with the name.<br>
+	 * @return A list with the clubs that match with the name.
+	 */
+	
+	public String binarySearchByName(String name){
+	
+		boolean found = false;
+		String list = "";
+		int start = 0;
+		int end = clubs.size() - 1;
+		Club club = new Club("", name, "", "");
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if (clubs.get(middle).compare(clubs.get(middle), club) == 0){
+				
+				list += clubs.get(middle).toString() + "\n";
+				list += searchByNameLeft(middle, club);
+				list += searchByNameRight(middle, club);
+				found = true;
+			}
+			if(clubs.get(middle).compare(clubs.get(middle), club) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}	
+		return list;
+	}
+		
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the clubs who match with the id.<br>
+	 * @return A list with the clubs that match with the name.
+	 */
+	
+	public void sequentialSearchByName(String name){
+		
+		Club club;
+		boolean running = true;
+		club = new Club("", name, "", "");
+		
+		for(int i = 0; i < clubs.size() - 1 && running; i++){
+			
+			if(clubs.get(i).compare(clubs.get(i), club) == 0){
+				
+				if(clubs.get(i+1).compare(clubs.get(i), club) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @return A list with the clubs that match with the creationDate.
+	 */
+	
+	public String searchByCreationDateLeft(int index, Club club){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index - 1; i > 0 && is; i--){
+			
+			if(clubs.get(i).compareByCreationDate(club) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += clubs.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @return A list with the clubs that match with the creationDate.
+	 */
+	
+	public String searchByCreationDateRight(int index, Club club){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index + 1; i > clubs.size() && is; i++){
+			
+			if(clubs.get(i).compareByCreationDate(club) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += clubs.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @return A list with the clubs that match with the creationDate.
+	 */
+	
+	public String binarySearchByCreationDate(String creationDate){
+	
+		boolean found = false;
+		String list = "";
+		int start = 0;
+		int end = clubs.size() - 1;
+		Club club = new Club("", "", creationDate , "");
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if (clubs.get(middle).compareByCreationDate(club) == 0){
+				
+				list += clubs.get(middle).toString() + "\n";
+				list += searchByCreationDateLeft(middle, club);
+				list += searchByCreationDateRight(middle, club);
+				found = true;
+			}
+			if(clubs.get(middle).compareByCreationDate(club) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}	
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the clubs who match with the id.<br>
+	 * @return A list with the clubs that match with the creationDate.
+	 */
+	
+	public void sequentialSearchByCreationDate(String creationDate){
+		
+		Club club;
+		boolean running = true;
+		club = new Club("", "", creationDate, "");
+		
+		for(int i = 0; i < clubs.size() - 1 && running; i++){
+			
+			if(clubs.get(i).compareByCreationDate(club) == 0){
+				
+				if(clubs.get(i+1).compareByCreationDate(club) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @return A list with the clubs that match with the petType.
+	 */
+	
+	public String searchByPetTypeLeft(int index, Club club){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index - 1; i > 0 && is; i--){
+			
+			if(clubs.get(i).compareByPetType(club) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += clubs.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @return A list with the clubs that match with the petType.
+	 */
+	
+	public String searchByPetTypeRight(int index, Club club){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index + 1; i > clubs.size() && is; i++){
+			
+			if(clubs.get(i).compareByPetType(club) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += clubs.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @return A list with the clubs that match with the petType.
+	 */
+	
+	public String binarySearchByPetType(String petType){
+	
+		boolean found = false;
+		String list = "";
+		int start = 0;
+		int end = clubs.size() - 1;
+		Club club = new Club("", "", "" , petType);
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if (clubs.get(middle).compareByPetType(club) == 0){
+				
+				list += clubs.get(middle).toString() + "\n";
+				list += searchByPetTypeLeft(middle, club);
+				list += searchByPetTypeRight(middle, club);
+				found = true;
+			}
+			if(clubs.get(middle).compareByPetType(club) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}	
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the clubs who match with the id.<br>
+	 * @return A list with the clubs that match with the petType.
+	 */
+	
+	public void sequentialSearchByPetType(String petType){
+		
+		Club club;
+		boolean running = true;
+		club = new Club("", "", "", petType);
+		
+		for(int i = 0; i < clubs.size() - 1 && running; i++){
+			
+			if(clubs.get(i).compareByPetType(club) == 0){
+				
+				if(clubs.get(i+1).compareByPetType(club) != 0){
+					
+					running = false;
+				}
+			}
+		}
 	}
 }
