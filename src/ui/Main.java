@@ -1,4 +1,5 @@
 package ui;
+import ui.Menu;
 
 /**
 *<b>Description:</b> The class Main in the package ui.<br>
@@ -7,18 +8,10 @@ package ui;
 
 public class Main {
 
-//Attributes
-
-	private Menu menu;
-
 	public static void main(String[]args){
 		
-		Main m = new Main();
-	}
-	
-	public Main(){
-		
-		menu = new Menu();
+		Menu menu = new Menu();
 		menu.systemMenu();
+		
 	}
 }

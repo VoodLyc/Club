@@ -381,7 +381,7 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows getting the id of a club by the argument and remove it from the ArrayList.<br>
-	 * @param arg The name or the id of the club.
+	 * @param arg The id of the club.
 	 * @return The club's id.
 	 */
 	
@@ -392,7 +392,7 @@ public class ClubsManagementSystem {
 		
 		for(int i = 0; i < clubs.size() && running; i++){
 			
-			if(clubs.get(i).getName().equals(arg) || clubs.get(i).getId().equals(arg)){	
+			if(clubs.get(i).getId().equals(arg)){	
 					
 					id = clubs.get(i).getId();
 					clubs.remove(i);
@@ -547,6 +547,7 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows doing a binary search for the clubs who match with the id.<br>
+	 * @param id The club's id.
 	 * @return A list with the clubs that match with the id.
 	 */
 	
@@ -581,6 +582,7 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows doing a sequential search for the clubs who match with the id.<br>
+	 * @param id The club's id.
 	 * @return A list with the clubs that match with the id.
 	 */
 	
@@ -604,6 +606,8 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param club The club which it compares.
 	 * @return A list with the clubs that match with the name.
 	 */
 	
@@ -630,6 +634,8 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param club The club which it compares.
 	 * @return A list with the clubs that match with the name.
 	 */
 	
@@ -656,6 +662,7 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows searching for the clubs who match with the name.<br>
+	 * @param name The club's name.
 	 * @return A list with the clubs that match with the name.
 	 */
 	
@@ -692,6 +699,7 @@ public class ClubsManagementSystem {
 		
 	/**
 	 *<b>Description:</b> This method allows doing a sequential search for the clubs who match with the id.<br>
+	 * @param name The club's name.
 	 * @return A list with the clubs that match with the name.
 	 */
 	
@@ -715,6 +723,8 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param club The club which it compares.
 	 * @return A list with the clubs that match with the creationDate.
 	 */
 	
@@ -741,6 +751,8 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param club The club which it compares.
 	 * @return A list with the clubs that match with the creationDate.
 	 */
 	
@@ -767,6 +779,7 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param creationDate The club's creationDate.
 	 * @return A list with the clubs that match with the creationDate.
 	 */
 	
@@ -803,6 +816,7 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows doing a sequential search for the clubs who match with the id.<br>
+	 * @param creationDate The club's creationDate.
 	 * @return A list with the clubs that match with the creationDate.
 	 */
 	
@@ -826,6 +840,8 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param club The club which it compares.
 	 * @return A list with the clubs that match with the petType.
 	 */
 	
@@ -852,6 +868,8 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param club The club which it compares.
 	 * @return A list with the clubs that match with the petType.
 	 */
 	
@@ -878,6 +896,7 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param petType The club's petType.
 	 * @return A list with the clubs that match with the petType.
 	 */
 	
@@ -914,6 +933,7 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows doing a sequential search for the clubs who match with the id.<br>
+	 * @param petType The club's petType.
 	 * @return A list with the clubs that match with the petType.
 	 */
 	
@@ -933,5 +953,161 @@ public class ClubsManagementSystem {
 				}
 			}
 		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the clubs who match with the id.<br>
+	 *@param arg The id of the club. 
+	 *@return A list with the clubs that match with the id and the time that it took.
+	 */
+	
+	public String searchById(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		t1 = System.nanoTime();
+		list = binarySearchById(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		t1 = System.nanoTime();
+		sequentialSearchById(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the clubs who match with the name.<br>
+	 *@param arg The name of the club. 
+	 *@return A list with the clubs that match with the name and the time that it took.
+	 */
+	
+	public String searchByName(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		t1 = System.nanoTime();
+		list = binarySearchByName(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		t1 = System.nanoTime();
+		sequentialSearchByName(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the clubs who match with the creationDate.<br>
+	 *@param arg The creationDate of the club. 
+	 *@return A list with the clubs that match with the creationDate and the time that it took.
+	 */
+	
+	public String searchByCreationDate(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		t1 = System.nanoTime();
+		list = binarySearchByCreationDate(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		
+		t1 = System.nanoTime();
+		sequentialSearchByCreationDate(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the clubs who match with the petType.<br>
+	 *@param arg The petType of the club. 
+	 *@return A list with the clubs that match with the petType and the time that it took.
+	 */
+	
+	public String searchByPetType(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		t1 = System.nanoTime();
+		list = binarySearchByPetType(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		t1 = System.nanoTime();
+		sequentialSearchByPetType(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows showing the lists of the clubs who match with the arg, and the time that took do the binary and sequential search.<br> 
+	 * @param typeOfSearch The type of search.
+	 * @param arg The search criterion.
+	 * @return A list with the clubs who match with the criterion.
+	 */
+	
+	public String clubSearchTypes(int typeOfSearch, String arg){
+		
+		String list = "";
+		
+		switch(typeOfSearch){
+		
+		case 1:
+			
+			list = searchById(arg);
+			
+			break;
+			
+		case 2:
+			
+			list = searchByName(arg);
+			
+			break;
+			
+		case 3:
+			
+			list = searchByCreationDate(arg);
+			
+			break;
+			
+		case 4:
+			
+			list = searchByPetType(arg);
+		}
+		
+		return list;
 	}
 }
