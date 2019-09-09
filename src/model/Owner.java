@@ -403,7 +403,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		for(int i = pets.size(); i > 0; i--){	
 			for(int j = 0; j < i - 1; j++){
 				
-				if(pets.get(j).compareById(pets.get(j+1)) > 0){
+				if(pets.get(j).compareTo(pets.get(j+1)) > 0){
 					
 					Pet tmp = pets.get(j);
 					pets.set(j, pets.get(j+1));

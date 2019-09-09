@@ -62,6 +62,12 @@ public class Menu{
 				
 			case 5:
 				
+				searchClubMenu();
+
+				break;
+				
+			case 6:
+				
 				running = false;
 
 				break;
@@ -82,7 +88,8 @@ public class Menu{
 			System.out.println("2. Create a club");
 			System.out.println("3. Delete a club");
 			System.out.println("4. Generate lists");
-			System.out.println("5. Exit");
+			System.out.println("5. Search");
+			System.out.println("6. Exit");
 						
 			try{
 
@@ -94,7 +101,7 @@ public class Menu{
 				scanner.next();
 			}
 
-			if(choice > 0 && choice < 6){
+			if(choice > 0 && choice < 7){
 
 				running = false;
 			}
@@ -207,6 +214,139 @@ public class Menu{
 		}
 	}
 	
+	public void searchClubMenu(){
+
+		boolean running = true;
+		
+		while(running){
+			
+			int searchType = searchClubSelectionMenu();
+			
+			switch(searchType){
+			
+			
+			case 1:
+				
+				searchClubByIdMenu(searchType);	
+				
+				break;
+				
+			case 2:
+				
+				searchClubByNameMenu(searchType);
+				
+				break;
+				
+			case 3:
+				
+				searchClubByCreationDateMenu(searchType);
+				
+				break;
+				
+			case 4:
+				
+				searchClubByPetTypeMenu(searchType);
+				
+				break;
+				
+			case 5:
+				
+				running = false;
+			}
+		}
+	}
+	
+	public void searchClubByIdMenu(int searchType){
+		
+		String id;
+		
+		System.out.println("Please enter the id of the club that does you want to found");	
+		id = scanner.nextLine();
+		System.out.println(clubsSystem.clubSearch(searchType, id));
+	}
+	
+	public String searchClubByNameMenu(int searchType){
+		
+		String name;
+		
+		System.out.println("Please enter the name of the club that does you want to found");
+		name = scanner.nextLine();
+		System.out.println(clubsSystem.clubSearch(searchType, name));
+		
+		return name;
+	}
+	
+	public void searchClubByCreationDateMenu(int searchType){
+		
+		int day, month, year;
+		String creationDate;
+		
+		System.out.println("Please enter the creation date of the club that does you want to found:\n");
+		
+		System.out.println("Please enter the club creation's day (A number between 1 and 31)");
+		day = validateInt(1, 31);	
+
+		System.out.println("Please enter the club creation's month (A number between 1 and 12)");
+		month = validateInt(1, 12);
+
+		System.out.println("Please enter the club creation's year (Example: 2015)");
+		year = validateInt(1700, 2300);
+
+		creationDate = day + "/" + month + "/" + year; 
+		
+		System.out.println(clubsSystem.clubSearch(searchType, creationDate));
+	}
+	
+	public void searchClubByPetTypeMenu(int searchType){
+		
+		String petType;
+		
+		System.out.println("Please enter the pet type of the club that does you want to found");
+		petType = scanner.nextLine();
+		System.out.println(clubsSystem.clubSearch(searchType, petType));
+	}
+	
+	public int searchClubSelectionMenu(){
+		
+		int searchType = 0;
+		boolean running = true;
+		
+		while(running){
+			
+			System.out.println("Please enter the type of search:\n");
+			System.out.println("1. Search by id");
+			System.out.println("2. Search by name");
+			System.out.println("3. Search by creation date");
+			System.out.println("4. Search by pet type");
+			System.out.println("5. To return");
+			
+			try{
+				
+				searchType = scanner.nextInt();
+				scanner.nextLine();
+			}
+			catch(InputMismatchException e){
+				
+				scanner.next();
+			}
+			
+			if(searchType > 0 && searchType < 5){
+				
+				running = false;
+			}
+			else if(searchType == 5){
+				
+				running = false;
+			}
+			else{
+				
+				System.out.println("Please enter a correct value");
+			}
+		}
+		
+		return searchType;
+	}
+	
 	public void clubMenu(){
 
 		boolean running = true;
@@ -244,6 +384,12 @@ public class Menu{
 				
 			case 5:
 				
+				searchOwnerMenu();
+
+				break;
+				
+			case 6:
+				
 				currentClub = null;
 				running = false;
 
@@ -265,7 +411,8 @@ public class Menu{
 			System.out.println("2. Create a owner");
 			System.out.println("3. Delete a owner");
 			System.out.println("4. Generate lists");
-			System.out.println("5. To return");
+			System.out.println("5. Search");
+			System.out.println("6. To return");
 						
 			try{
 
@@ -277,7 +424,7 @@ public class Menu{
 				scanner.next();
 			}
 
-			if(choice > 0 && choice < 6){
+			if(choice > 0 && choice < 7){
 
 				running = false;
 			}
@@ -389,6 +536,139 @@ public class Menu{
 			}
 			
 		}
+	}
+	
+	public void searchOwnerMenu(){
+
+		boolean running = true;
+		
+		while(running){
+			
+			int searchType = searchOwnerSelectionMenu();
+			
+			switch(searchType){
+			
+			
+			case 1:
+				
+				searchOwnerByIdMenu(searchType);	
+				
+				break;
+				
+			case 2:
+				
+				searchOwnerByNameMenu(searchType);
+				
+				break;
+				
+			case 3:
+				
+				searchOwnerByBirthdateMenu(searchType);
+				
+				break;
+				
+			case 4:
+				
+				searchOwnerByFavoritePetMenu(searchType);
+				
+				break;
+				
+			case 5:
+				
+				running = false;
+			}
+		}
+	}
+	
+	public void searchOwnerByIdMenu(int searchType){
+		
+		String id;
+		
+		System.out.println("Please enter the id of the owner that does you want to found");	
+		id = scanner.nextLine();
+		System.out.println(currentClub.ownerSearch(searchType, id));
+	}
+	
+	public String searchOwnerByNameMenu(int searchType){
+		
+		String name;
+		
+		System.out.println("Please enter the name of the owner that does you want to found");
+		name = scanner.nextLine();
+		System.out.println(currentClub.ownerSearch(searchType, name));
+		
+		return name;
+	}
+	
+	public void searchOwnerByBirthdateMenu(int searchType){
+		
+		int day, month, year;
+		String birthdate;
+		
+		System.out.println("Please enter the creation date of the onwer that does you want to found:\n");
+		
+		System.out.println("Please enter the owner's birth day (A number between 1 and 31)");
+		day = validateInt(1, 31);	
+
+		System.out.println("Please enter the owner's birth month (A number between 1 and 12)");
+		month = validateInt(1, 12);
+
+		System.out.println("Please enter the owner's birth year (Example: 2015)");
+		year = validateInt(1700, 2300);
+
+		birthdate = day + "/" + month + "/" + year; 
+		
+		System.out.println(currentClub.ownerSearch(searchType, birthdate));
+	}
+	
+	public void searchOwnerByFavoritePetMenu(int searchType){
+		
+		String favoritePet;
+		
+		System.out.println("Please enter the favorite pet of the owner that does you want to found");
+		favoritePet = scanner.nextLine();
+		System.out.println(currentClub.ownerSearch(searchType, favoritePet));
+	}
+	
+	public int searchOwnerSelectionMenu(){
+		
+		int searchType = 0;
+		boolean running = true;
+		
+		while(running){
+			
+			System.out.println("Please enter the type of search:\n");
+			System.out.println("1. Search by id");
+			System.out.println("2. Search by name");
+			System.out.println("3. Search by birthdate");
+			System.out.println("4. Search by favorite pet");
+			System.out.println("5. To return");
+			
+			try{
+				
+				searchType = scanner.nextInt();
+				scanner.nextLine();
+			}
+			catch(InputMismatchException e){
+				
+				scanner.next();
+			}
+			
+			if(searchType > 0 && searchType < 5){
+				
+				running = false;
+			}
+			else if(searchType == 5){
+				
+				running = false;
+			}
+			else{
+				
+				System.out.println("Please enter a correct value");
+			}
+		}
+		
+		return searchType;
 	}
 		
 	public void ownerMenu(){

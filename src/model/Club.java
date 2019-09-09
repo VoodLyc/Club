@@ -111,7 +111,7 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 		toString += "ID: " + id + "\n";
 		toString += "Name: " + name + "\n";
 		toString += "Creation date: " + creationDate + "\n";
-		toString += "Pet type : " + petType + "\n";
+		toString += "Pet type: " + petType + "\n";
 		toString += "Number Of Owners: " + owners.size() + "\n";
 		
 		return toString;
@@ -363,7 +363,7 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 	public int compareTo(Club club){
 		
 		int result = 0;
-		int id = Integer.parseInt(this.id);
+		int id = Integer.parseInt(getId());
 		int id2 = Integer.parseInt(club.getId());
 		
 		if(id > id2){
@@ -773,6 +773,577 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 		
 		}
 			
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching for the owners who match with the id.<br>
+	 * @param id The owner's id.
+	 * @return A list with the owners that match with the id.
+	 */
+	
+	public String binarySearchById(String id){
+	 
+		boolean found = false;
+		String list = "The owner(s) with that id could not be found";
+		int start = 0;
+		int end = owners.size() - 1;
+		Owner owner = new Owner(id, "", "", "");
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if(owners.get(middle).compareTo(owner) == 0){
+				
+				list = owners.get(middle).toString() + "\n";
+				found = true;
+			}
+			if(owners.get(middle).compareTo(owner) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}	
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the owners who match with the id.<br>
+	 * @param id The owner's id.
+	 * @return A list with the owners that match with the id.
+	 */
+	
+	public void sequentialSearchById(String id){
+		
+		Owner owner;
+		boolean running = true;
+		owner = new Owner(id, "", "", "");
+		
+		for(int i = 0; i < owners.size() - 1 && running; i++){
+			
+			if(owners.get(i).compareTo(owner) == 0){
+				
+				if(owners.get(i+1).compareTo(owner) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param owner The owner which it compares.
+	 * @return A list with the owners that match with the name.
+	 */
+	
+	public String searchByNameLeft(int index, Owner owner){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index - 1; i >= 0 && is; i--){
+			
+			if(owners.get(i).compareByName(owner) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += owners.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param owner The owner which it compares.
+	 * @return A list with the owners that match with the name.
+	 */
+	
+	public String searchByNameRight(int index, Owner owner){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index + 1; i > owners.size() && is; i++){
+			
+			if(owners.get(i).compareByName(owner) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += owners.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching for the owners who match with the name.<br>
+	 * @param name The ownwer's name.
+	 * @return A list with the owners that match with the name.
+	 */
+	
+	public String binarySearchByName(String name){
+	
+		boolean found = false;
+		String list = "The owner(s) with that name could not be found";
+		int start = 0;
+		int end = owners.size() - 1;
+		Owner owner = new Owner("", name, "", "");
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if(owners.get(middle).compareByName(owner) == 0){
+				
+				list = owners.get(middle).toString() + "\n";
+				list += searchByNameLeft(middle, owner);
+				list += searchByNameRight(middle, owner);
+				found = true;
+			}
+			if(owners.get(middle).compareByName(owner) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the owners who match with the name.<br>
+	 * @param name The owner's name.
+	 * @return A list with the owners that match with the name.
+	 */
+	
+	public void sequentialSearchByName(String name){
+		
+		Owner owner;
+		boolean running = true;
+		owner = new Owner("", name, "", "");
+		
+		for(int i = 0; i < owners.size() - 1 && running; i++){
+			
+			if(owners.get(i).compareByName(owner) == 0){
+				
+				if(owners.get(i+1).compareByName(owner) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param owner The owner which it compares.
+	 * @return A list with the owners that match with the birthdate.
+	 */
+	
+	public String searchByBirthdateLeft(int index, Owner owner){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index - 1; i >= 0 && is; i--){
+			
+			if(owners.get(i).compareByBirthdate(owner) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += owners.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param owner The owner which it compares.
+	 * @return A list with the owners that match with the birthdate.
+	 */
+	
+	public String searchByBirthdateRight(int index, Owner owner){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index + 1; i > owners.size() && is; i++){
+			
+			if(owners.get(i).compareByBirthdate(owner) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += owners.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching for the owners who match with the birthdate.<br>
+	 * @param birthdate The ownwer's birthdate.
+	 * @return A list with the owners that match with the birthdate.
+	 */
+	
+	public String binarySearchByBirthdate(String birthdate){
+	
+		boolean found = false;
+		String list = "The owner(s) with that birthdate could not be found";
+		int start = 0;
+		int end = owners.size() - 1;
+		Owner owner = new Owner("", "", birthdate, "");
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if(owners.get(middle).compareByBirthdate(owner) == 0){
+				
+				list = owners.get(middle).toString() + "\n";
+				list += searchByBirthdateLeft(middle, owner);
+				list += searchByBirthdateRight(middle, owner);
+				found = true;
+			}
+			if(owners.get(middle).compareByBirthdate(owner) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the owners who match with the birthdate.<br>
+	 * @param birthdate The owner's birhtdate.
+	 * @return A list with the owners that match with the birthdate.
+	 */
+	
+	public void sequentialSearchByBirthdate(String birthdate){
+		
+		Owner owner;
+		boolean running = true;
+		owner = new Owner("", "", birthdate, "");
+		
+		for(int i = 0; i < owners.size() - 1 && running; i++){
+			
+			if(owners.get(i).compareByBirthdate(owner) == 0){
+				
+				if(owners.get(i+1).compareByBirthdate(owner) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param owner The owner which it compares.
+	 * @return A list with the owners that match with the favoritePet.
+	 */
+	
+	public String searchByFavoritePetLeft(int index, Owner owner){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index - 1; i >= 0 && is; i--){
+			
+			if(owners.get(i).compareByFavoritePet(owner) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += owners.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param owner The owner which it compares.
+	 * @return A list with the owners that match with the favoritePet.
+	 */
+	
+	public String searchByFavoritePetRight(int index, Owner owner){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index + 1; i > owners.size() && is; i++){
+			
+			if(owners.get(i).compareByFavoritePet(owner) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += owners.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching for the owners who match with the favoritePet.<br>
+	 * @param birthdate The ownwer's favoritePet.
+	 * @return A list with the owners that match with the favoritePet.
+	 */
+	
+	public String binarySearchByFavoritePet(String favoritePet){
+	
+		boolean found = false;
+		String list = "The owner(s) with that favorite pet could not be found";
+		int start = 0;
+		int end = owners.size() - 1;
+		Owner owner = new Owner("", "", "", favoritePet);
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if(owners.get(middle).compareByFavoritePet(owner) == 0){
+				
+				list = owners.get(middle).toString() + "\n";
+				list += searchByFavoritePetLeft(middle, owner);
+				list += searchByFavoritePetRight(middle, owner);
+				found = true;
+			}
+			if(owners.get(middle).compareByFavoritePet(owner) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the owners who match with the favoritePet.<br>
+	 * @param id The owner's id.
+	 * @return A list with the owners that match with the favoritePet.
+	 */
+	
+	public void sequentialSearchByFavoritePet(String favoritePet){
+		
+		Owner owner;
+		boolean running = true;
+		owner = new Owner("", "", "", favoritePet);
+		
+		for(int i = 0; i < owners.size() - 1 && running; i++){
+			
+			if(owners.get(i).compareByFavoritePet(owner) == 0){
+				
+				if(owners.get(i+1).compareByFavoritePet(owner) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the owners who match with the id.<br>
+	 *@param arg The id of the owner. 
+	 *@return A list with the owners that match with the id and the time that it took.
+	 */
+	
+	public String searchById(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		sortOwnersById();
+		
+		t1 = System.nanoTime();
+		list = binarySearchById(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		t1 = System.nanoTime();
+		sequentialSearchById(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the owners who match with the name.<br>
+	 *@param arg The name of the owner. 
+	 *@return A list with the owners that match with the name and the time that it took.
+	 */
+	
+	public String searchByName(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		sortOwnersByName();
+		
+		t1 = System.nanoTime();
+		list = binarySearchByName(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		t1 = System.nanoTime();
+		sequentialSearchByName(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the owners who match with the birthdate.<br>
+	 *@param arg The birthdate of the owner. 
+	 *@return A list with the clubs that match with the birthdate and the time that it took.
+	 */
+	
+	public String searchByBirthdate(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		sortOwnersByBirthdate();
+		
+		t1 = System.nanoTime();
+		list = binarySearchByBirthdate(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		
+		t1 = System.nanoTime();
+		sequentialSearchByBirthdate(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the owners who match with the favoritePet.<br>
+	 *@param arg The favoritePet of the owner. 
+	 *@return A list with the clubs that match with the favoritePet and the time that it took.
+	 */
+	
+	public String searchByFavoritePet(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		sortOwnersByFavoritePet();
+		
+		t1 = System.nanoTime();
+		list = binarySearchByFavoritePet(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		t1 = System.nanoTime();
+		sequentialSearchByFavoritePet(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows showing the lists of the clubs who match with the arg, and the time that took do the binary and sequential search.<br> 
+	 * @param typeOfSearch The type of search.
+	 * @param arg The search criterion.
+	 * @return A list with the clubs who match with the criterion.
+	 */
+	
+	public String ownerSearch(int typeOfSearch, String arg){
+		
+		String list = "";
+		
+		switch(typeOfSearch){
+		
+		case 1:
+			
+			list = searchById(arg);
+			
+			break;
+			
+		case 2:
+			
+			list = searchByName(arg);
+			
+			break;
+			
+		case 3:
+			
+			list = searchByBirthdate(arg);
+			
+			break;
+			
+		case 4:
+			
+			list = searchByFavoritePet(arg);
+		}
+		
 		return list;
 	}
 

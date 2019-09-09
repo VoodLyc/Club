@@ -287,7 +287,7 @@ public class ClubsManagementSystem {
 				
 				Club actual = clubs.get(j);
 				
-				if(actual.compare(actual, minor) < 0){
+				if(actual.compareTo( minor) < 0){
 					
 					minor = actual;					
 					minorPos = j;
@@ -307,14 +307,15 @@ public class ClubsManagementSystem {
 	
 	public void sortClubsByName(){
 			
-		for(int i = 1; i < clubs.size(); i++){
-			for(int j = i - 1; j >= 0 && clubs.get(j).compare(clubs.get(i), clubs.get(j+1)) > 0; j--){
+		for(int i = clubs.size(); i > 0; i--){	
+			for(int j = 0; j < i - 1; j++){
 				
-				Club one = clubs.get(j);
-				Club two = clubs.get(j+1);
-				
-				clubs.set(j, two);
-				clubs.set(j+1, one);
+				if(clubs.get(j).compare(clubs.get(j), clubs.get(j+1)) > 0){
+					
+					Club tmp = clubs.get(j);
+					clubs.set(j, clubs.get(j+1));
+					clubs.set(j+1, tmp);
+				}
 			}
 		}
 	}
@@ -546,7 +547,7 @@ public class ClubsManagementSystem {
 	}
 	
 	/**
-	 *<b>Description:</b> This method allows doing a binary search for the clubs who match with the id.<br>
+	 *<b>Description:</b> This method allows searching for the clubs who match with the id.<br>
 	 * @param id The club's id.
 	 * @return A list with the clubs that match with the id.
 	 */
@@ -554,7 +555,7 @@ public class ClubsManagementSystem {
 	public String binarySearchById(String id){
 	 
 		boolean found = false;
-		String list = "";
+		String list = "The club(s) with that id could not be found";
 		int start = 0;
 		int end = clubs.size() - 1;
 		Club club = new Club(id, "", "", "");
@@ -563,12 +564,12 @@ public class ClubsManagementSystem {
 			
 			int middle = ((start + end) / 2);
 			
-			if (clubs.get(middle).compare(clubs.get(middle), club) == 0){
+			if(clubs.get(middle).compareTo(club) == 0){
 				
-				list += clubs.get(middle).toString() + "\n";
+				list = clubs.get(middle).toString() + "\n";
 				found = true;
 			}
-			if(clubs.get(middle).compare(clubs.get(middle), club) > 0){
+			if(clubs.get(middle).compareTo(club) > 0){
 				
 				end = middle - 1;
 			}
@@ -594,7 +595,7 @@ public class ClubsManagementSystem {
 		
 		for(int i = 0; i < clubs.size() - 1 && running; i++){
 			
-			if(clubs.get(i).compare(clubs.get(i),club) == 0){
+			if(clubs.get(i).compare(clubs.get(i), club) == 0){
 				
 				if(clubs.get(i+1).compare(clubs.get(i+1), club) != 0){
 					
@@ -616,7 +617,7 @@ public class ClubsManagementSystem {
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index - 1; i > 0 && is; i--){
+		for(int i = index - 1; i >= 0 && is; i--){
 			
 			if(clubs.get(i).compare(clubs.get(i), club) != 0){
 				
@@ -669,7 +670,7 @@ public class ClubsManagementSystem {
 	public String binarySearchByName(String name){
 	
 		boolean found = false;
-		String list = "";
+		String list = "The club(s) with that name could not be found";
 		int start = 0;
 		int end = clubs.size() - 1;
 		Club club = new Club("", name, "", "");
@@ -678,9 +679,9 @@ public class ClubsManagementSystem {
 			
 			int middle = ((start + end) / 2);
 			
-			if (clubs.get(middle).compare(clubs.get(middle), club) == 0){
+			if(clubs.get(middle).compare(clubs.get(middle), club) == 0){
 				
-				list += clubs.get(middle).toString() + "\n";
+				list = clubs.get(middle).toString() + "\n";
 				list += searchByNameLeft(middle, club);
 				list += searchByNameRight(middle, club);
 				found = true;
@@ -693,7 +694,7 @@ public class ClubsManagementSystem {
 				
 				start = middle + 1;
 			}
-		}	
+		}
 		return list;
 	}
 		
@@ -733,7 +734,7 @@ public class ClubsManagementSystem {
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index - 1; i > 0 && is; i--){
+		for(int i = index - 1; i >= 0 && is; i--){
 			
 			if(clubs.get(i).compareByCreationDate(club) != 0){
 				
@@ -778,7 +779,7 @@ public class ClubsManagementSystem {
 	}
 	
 	/**
-	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 *<b>Description:</b> This method allows searching for the clubs who match with the creationDate.<br>
 	 * @param creationDate The club's creationDate.
 	 * @return A list with the clubs that match with the creationDate.
 	 */
@@ -786,7 +787,7 @@ public class ClubsManagementSystem {
 	public String binarySearchByCreationDate(String creationDate){
 	
 		boolean found = false;
-		String list = "";
+		String list = "The club(s) with that creation date could not be found";
 		int start = 0;
 		int end = clubs.size() - 1;
 		Club club = new Club("", "", creationDate , "");
@@ -795,9 +796,9 @@ public class ClubsManagementSystem {
 			
 			int middle = ((start + end) / 2);
 			
-			if (clubs.get(middle).compareByCreationDate(club) == 0){
+			if(clubs.get(middle).compareByCreationDate(club) == 0){
 				
-				list += clubs.get(middle).toString() + "\n";
+				list = clubs.get(middle).toString() + "\n";
 				list += searchByCreationDateLeft(middle, club);
 				list += searchByCreationDateRight(middle, club);
 				found = true;
@@ -850,7 +851,7 @@ public class ClubsManagementSystem {
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index - 1; i > 0 && is; i--){
+		for(int i = index - 1; i >= 0 && is; i--){
 			
 			if(clubs.get(i).compareByPetType(club) != 0){
 				
@@ -895,7 +896,7 @@ public class ClubsManagementSystem {
 	}
 	
 	/**
-	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 *<b>Description:</b> This method allows searching for the clubs who match with the petType.<br>
 	 * @param petType The club's petType.
 	 * @return A list with the clubs that match with the petType.
 	 */
@@ -903,7 +904,7 @@ public class ClubsManagementSystem {
 	public String binarySearchByPetType(String petType){
 	
 		boolean found = false;
-		String list = "";
+		String list = "The clubs(s) with that pet type could not be found";
 		int start = 0;
 		int end = clubs.size() - 1;
 		Club club = new Club("", "", "" , petType);
@@ -912,9 +913,9 @@ public class ClubsManagementSystem {
 			
 			int middle = ((start + end) / 2);
 			
-			if (clubs.get(middle).compareByPetType(club) == 0){
+			if(clubs.get(middle).compareByPetType(club) == 0){
 				
-				list += clubs.get(middle).toString() + "\n";
+				list = clubs.get(middle).toString() + "\n";
 				list += searchByPetTypeLeft(middle, club);
 				list += searchByPetTypeRight(middle, club);
 				found = true;
@@ -967,6 +968,8 @@ public class ClubsManagementSystem {
 		long t1, t2;
 		long delta1, delta2;
 		
+		sortClubsById();
+		
 		t1 = System.nanoTime();
 		list = binarySearchById(arg) + "\n";
 		t2 = System.nanoTime();
@@ -996,6 +999,8 @@ public class ClubsManagementSystem {
 		long t1, t2;
 		long delta1, delta2;
 		
+		sortClubsByName();
+		
 		t1 = System.nanoTime();
 		list = binarySearchByName(arg) + "\n";
 		t2 = System.nanoTime();
@@ -1024,6 +1029,8 @@ public class ClubsManagementSystem {
 		String list = "";
 		long t1, t2;
 		long delta1, delta2;
+		
+		sortClubsByCreationDate();
 		
 		t1 = System.nanoTime();
 		list = binarySearchByCreationDate(arg) + "\n";
@@ -1055,6 +1062,8 @@ public class ClubsManagementSystem {
 		long t1, t2;
 		long delta1, delta2;
 		
+		sortClubsByPetType();
+		
 		t1 = System.nanoTime();
 		list = binarySearchByPetType(arg) + "\n";
 		t2 = System.nanoTime();
@@ -1079,7 +1088,7 @@ public class ClubsManagementSystem {
 	 * @return A list with the clubs who match with the criterion.
 	 */
 	
-	public String clubSearchTypes(int typeOfSearch, String arg){
+	public String clubSearch(int typeOfSearch, String arg){
 		
 		String list = "";
 		
