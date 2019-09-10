@@ -35,8 +35,8 @@ public class Pet implements Serializable, Comparable <Pet>{
 		this.id = id;
 		this.name = name;
 		this.birthdate = birthdate;
-		this.petType = petType;
 		this.gender = gender;
+		this.petType = petType;
 	}
 	
 //Methods

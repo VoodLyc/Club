@@ -1342,6 +1342,8 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 		case 4:
 			
 			list = searchByFavoritePet(arg);
+			
+			break;
 		}
 		
 		return list;

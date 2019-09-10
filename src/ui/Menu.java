@@ -265,15 +265,13 @@ public class Menu{
 		System.out.println(clubsSystem.clubSearch(searchType, id));
 	}
 	
-	public String searchClubByNameMenu(int searchType){
+	public void searchClubByNameMenu(int searchType){
 		
 		String name;
 		
 		System.out.println("Please enter the name of the club that does you want to found");
 		name = scanner.nextLine();
 		System.out.println(clubsSystem.clubSearch(searchType, name));
-		
-		return name;
 	}
 	
 	public void searchClubByCreationDateMenu(int searchType){
@@ -330,11 +328,7 @@ public class Menu{
 				scanner.next();
 			}
 			
-			if(searchType > 0 && searchType < 5){
-				
-				running = false;
-			}
-			else if(searchType == 5){
+			if(searchType > 0 && searchType < 6){
 				
 				running = false;
 			}
@@ -521,12 +515,12 @@ public class Menu{
 				scanner.next();
 			}
 			
-			if(choice > 0 && choice < 6){
+			if(choice > 0 && choice < 7){
 				
 				System.out.println();
 				System.out.print(currentClub.ownerSortList(choice));
 			}
-			else if(choice == 6){
+			else if(choice == 7){
 				
 				running = false;
 			}
@@ -589,15 +583,13 @@ public class Menu{
 		System.out.println(currentClub.ownerSearch(searchType, id));
 	}
 	
-	public String searchOwnerByNameMenu(int searchType){
+	public void searchOwnerByNameMenu(int searchType){
 		
 		String name;
 		
 		System.out.println("Please enter the name of the owner that does you want to found");
 		name = scanner.nextLine();
 		System.out.println(currentClub.ownerSearch(searchType, name));
-		
-		return name;
 	}
 	
 	public void searchOwnerByBirthdateMenu(int searchType){
@@ -654,11 +646,7 @@ public class Menu{
 				scanner.next();
 			}
 			
-			if(searchType > 0 && searchType < 5){
-				
-				running = false;
-			}
-			else if(searchType == 5){
+			if(searchType > 0 && searchType < 6){
 				
 				running = false;
 			}
@@ -702,6 +690,12 @@ public class Menu{
 				
 			case 4:
 				
+				searchPetMenu();
+
+				break;
+				
+			case 5:
+				
 				currentOwner = null;
 				running = false;
 
@@ -721,7 +715,8 @@ public class Menu{
 			System.out.println("1. Create a pet");
 			System.out.println("2. Delete a pet");
 			System.out.println("3. Generate lists");
-			System.out.println("4. To return");
+			System.out.println("4. Search");
+			System.out.println("5. To return");
 						
 			try{
 
@@ -733,7 +728,7 @@ public class Menu{
 				scanner.next();
 			}
 
-			if(choice > 0 && choice < 5){
+			if(choice > 0 && choice < 6){
 
 				running = false;
 			}
@@ -798,8 +793,9 @@ public class Menu{
 			System.out.println("1. Sort list by id");
 			System.out.println("2. Sort list by name");
 			System.out.println("3. Sort list by bithdate");
-			System.out.println("4. Sort list by pet type");
-			System.out.println("5. To return");
+			System.out.println("4. Sort list by gender");
+			System.out.println("5. Sort list by pet type");
+			System.out.println("6. To return");
 			
 			try{
 				
@@ -811,12 +807,12 @@ public class Menu{
 				scanner.next();
 			}
 			
-			if(choice > 0 && choice < 5){
+			if(choice > 0 && choice < 6){
 				
 				System.out.println();
 				System.out.print(currentOwner.petsSortList(choice));
 			}
-			else if(choice == 5){
+			else if(choice == 6){
 				
 				running = false;
 			}
@@ -826,6 +822,147 @@ public class Menu{
 			}
 			
 		}
+	}
+	
+	public void searchPetMenu(){
+
+		boolean running = true;
+		
+		while(running){
+			
+			int searchType = searchPetSelectionMenu();
+			
+			switch(searchType){
+			
+			
+			case 1:
+				
+				searchPetByIdMenu(searchType);	
+				
+				break;
+				
+			case 2:
+				
+				searchPetByNameMenu(searchType);
+				
+				break;
+				
+			case 3:
+				
+				searchPetByBirthdateMenu(searchType);
+				
+				break;
+				
+			case 4:
+				
+				searchPetByGenderMenu(searchType);
+				
+				break;
+				
+			case 5:
+				
+				searchPetByPetTypeMenu(searchType);
+				
+				break;
+				
+			case 6:
+				
+				running = false;
+			}
+		}
+	}
+	
+	public void searchPetByIdMenu(int searchType){
+		
+		String id;
+		
+		System.out.println("Please enter the id of the pet that does you want to found");	
+		id = scanner.nextLine();
+		System.out.println(currentOwner.petsSearch(searchType, id));
+	}
+	
+	public void searchPetByNameMenu(int searchType){
+		
+		String name;
+		
+		System.out.println("Please enter the name of the pet that does you want to found");
+		name = scanner.nextLine();
+		System.out.println(currentOwner.petsSearch(searchType, name));
+		
+	}
+	
+	public void searchPetByBirthdateMenu(int searchType){
+		
+		int day, month, year;
+		String birthdate;
+
+		System.out.println("Please enter the pet's birth day (A number between 1 and 31)");
+		day = validateInt(1, 31);	
+
+		System.out.println("Please enter the pet's birth month (A number between 1 and 12)");
+		month = validateInt(1, 12);
+
+		System.out.println("Please enter the pet's birth year (Example: 2015)");
+		year = validateInt(1700, 2300);
+
+		birthdate = day + "/" + month + "/" + year;
+		
+		System.out.println(currentOwner.petsSearch(searchType, birthdate));
+	}
+	
+	public void searchPetByGenderMenu(int searchType){
+		
+		String gender;
+		
+		gender = validateGender();
+		System.out.println(currentOwner.petsSearch(searchType, gender));
+	}
+	
+	public void searchPetByPetTypeMenu(int searchType){
+		
+		String petType;
+		
+		System.out.println("Please enter the pet type of the pet that does you want to found");
+		petType = scanner.nextLine();
+		System.out.println(currentOwner.petsSearch(searchType, petType));
+	}
+	
+	public int searchPetSelectionMenu(){
+		
+		int searchType = 0;
+		boolean running = true;
+		
+		while(running){
+			
+			System.out.println("Please enter the type of search:\n");
+			System.out.println("1. Search by id");
+			System.out.println("2. Search by name");
+			System.out.println("3. Search by birthdate");
+			System.out.println("4. Search by gender");
+			System.out.println("5. Search by pet type");
+			System.out.println("6. To return");
+			
+			try{
+				
+				searchType = scanner.nextInt();
+				scanner.nextLine();
+			}
+			catch(InputMismatchException e){
+				
+				scanner.next();
+			}
+			
+			if(searchType > 0 && searchType < 7){
+				
+				running = false;
+			}
+			else{
+				
+				System.out.println("Please enter a correct value");
+			}
+		}
+		
+		return searchType;
 	}
 
 	public int validateInt(int minimum, int max){

@@ -1115,6 +1115,8 @@ public class ClubsManagementSystem {
 		case 4:
 			
 			list = searchByPetType(arg);
+			
+			break;
 		}
 		
 		return list;

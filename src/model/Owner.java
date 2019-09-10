@@ -449,23 +449,14 @@ public class Owner implements Serializable, Comparable<Owner> {
 	
 	public void sortPetsByBirthdate(){
 		
-		boolean added = false;
-		
 		for(int i = 1; i < pets.size(); i++){
-			for(int j = i; j > 0 && !added; j--){
+			for(int j = i - 1; j >= 0 && pets.get(j).compareByBirthdate(pets.get(j+1)) > 0; j--){
 				
 				Pet one = pets.get(j);
-				Pet two = pets.get(j-1);
+				Pet two = pets.get(j+1);
 				
-				if(one.compareByBirthdate(two) < 0){
-					
-					pets.set(j, one);
-					pets.set(j - 1, two);					
-				}
-				else{
-					
-					added = true;
-				}
+				pets.set(j, two);
+				pets.set(j+1, one);
 			}
 		}
 	}
@@ -506,23 +497,14 @@ public class Owner implements Serializable, Comparable<Owner> {
 	
 	public void sortPetsByPetType(){
 		
-		boolean added = false;
-		
 		for(int i = 1; i < pets.size(); i++){
-			for(int j = i; j > 0 && !added; j--){
+			for(int j = i - 1; j >= 0 && pets.get(j).compareByPetType(pets.get(j+1)) > 0; j--){
 				
 				Pet one = pets.get(j);
-				Pet two = pets.get(j-1);
+				Pet two = pets.get(j+1);
 				
-				if(one.compareByPetType(two) < 0){
-					
-					pets.set(j, one);
-					pets.set(j - 1, two);					
-				}
-				else{
-					
-					added = true;
-				}
+				pets.set(j, two);
+				pets.set(j+1, one);
 			}
 		}
 	}
@@ -684,6 +666,733 @@ public class Owner implements Serializable, Comparable<Owner> {
 		
 		}
 			
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param pet The pet which it compares.
+	 * @return A list with the pets that match with the id.
+	 */
+	
+	public String searchByIdLeft(int index, Pet pet){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index - 1; i >= 0 && is; i--){
+			
+			if(pets.get(i).compareById(pet) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += pets.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param pet The pet which it compares.
+	 * @return A list with the pets that match with the id.
+	 */
+	
+	public String searchByIdRight(int index, Pet pet){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index + 1; i > pets.size() && is; i++){
+			
+			if(pets.get(i).compareById(pet) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += pets.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching for the pets who match with the id.<br>
+	 * @param pet The pet's id.
+	 * @return A list with the pets that match with the id.
+	 */
+	
+	public String binarySearchById(String id){
+	
+		boolean found = false;
+		String list = "The pet(s) with that id could not be found";
+		int start = 0;
+		int end = pets.size() - 1;
+		Pet pet = new Pet(id, "", "", "", "");
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if(pets.get(middle).compareById(pet) == 0){
+				
+				list = pets.get(middle).toString() + "\n";
+				list += searchByIdLeft(middle, pet);
+				list += searchByIdRight(middle, pet);
+				found = true;
+			}
+			if(pets.get(middle).compareById(pet) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the pets who match with the id.<br>
+	 * @param id The pet's id.
+	 * @return A list with the pets that match with the id.
+	 */
+	
+	public void sequentialSearchById(String id){
+		
+		Pet pet;
+		boolean running = true;
+		pet = new Pet(id, "", "", "", "");
+		
+		for(int i = 0; i < pets.size() - 1 && running; i++){
+			
+			if(pets.get(i).compareById(pet) == 0){
+				
+				if(pets.get(i+1).compareById(pet) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching for the pets who match with the name.<br>
+	 * @param name The pet's name.
+	 * @return A list with the pets that match with the name.
+	 */
+	
+	public String binarySearchByName(String name){
+	 
+		boolean found = false;
+		String list = "The pet(s) with that name could not be found";
+		int start = 0;
+		int end = pets.size() - 1;
+		Pet pet = new Pet("", name, "","","");
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if(pets.get(middle).compareTo(pet) == 0){
+				
+				list = pets.get(middle).toString() + "\n";
+				found = true;
+			}
+			if(pets.get(middle).compareTo(pet) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}	
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the pets who match with the name.<br>
+	 * @param name The pet's name.
+	 * @return A list with the pets that match with the name.
+	 */
+	
+	public void sequentialSearchByName(String name){
+		
+		Pet pet;
+		boolean running = true;
+		pet = new Pet("", name, "", "", "");
+		
+		for(int i = 0; i < pets.size() - 1 && running; i++){
+			
+			if(pets.get(i).compareTo(pet) == 0){
+				
+				if(pets.get(i+1).compareTo(pet) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param pet The pet which it compares.
+	 * @return A list with the pets that match with the birthdate.
+	 */
+	
+	public String searchByBirthdateLeft(int index, Pet pet){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index - 1; i >= 0 && is; i--){
+			
+			if(pets.get(i).compareByBirthdate(pet) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += pets.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param pet The pet which it compares.
+	 * @return A list with the pets that match with the birthdate.
+	 */
+	
+	public String searchByBirthdateRight(int index, Pet pet){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index + 1; i > pets.size() && is; i++){
+			
+			if(pets.get(i).compareByBirthdate(pet) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += pets.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching for the pets who match with the birthdate.<br>
+	 * @param birthdate The pet's birthdate.
+	 * @return A list with the pets that match with the birthdate.
+	 */
+	
+	public String binarySearchByBirthdate(String birthdate){
+	 
+		boolean found = false;
+		String list = "The pet(s) with that birthdate could not be found";
+		int start = 0;
+		int end = pets.size() - 1;
+		Pet pet = new Pet("", "", birthdate,"","");
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if(pets.get(middle).compareByBirthdate(pet) == 0){
+				
+				list = pets.get(middle).toString() + "\n";
+				list += searchByBirthdateLeft(middle, pet);
+				list += searchByBirthdateRight(middle, pet);
+				found = true;
+			}
+			if(pets.get(middle).compareByBirthdate(pet) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}	
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the pets who match with the birthdate.<br>
+	 * @param birthdate The pet's birhdate.
+	 * @return A list with the pets that match with the birhdate.
+	 */
+	
+	public void sequentialSearchByBirthdate(String birthdate){
+		
+		Pet pet;
+		boolean running = true;
+		pet = new Pet("", "", birthdate, "", "");
+		
+		for(int i = 0; i < pets.size() - 1 && running; i++){
+			
+			if(pets.get(i).compareByBirthdate(pet) == 0){
+				
+				if(pets.get(i+1).compareByBirthdate(pet) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param pet The pet which it compares.
+	 * @return A list with the pets that match with the gender.
+	 */
+	
+	public String searchByGenderLeft(int index, Pet pet){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index - 1; i >= 0 && is; i--){
+			
+			if(pets.get(i).compareByGender(pet) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += pets.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param pet The pet which it compares.
+	 * @return A list with the pets that match with the gender.
+	 */
+	
+	public String searchByGenderRight(int index, Pet pet){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index + 1; i > pets.size() && is; i++){
+			
+			if(pets.get(i).compareByGender(pet) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += pets.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching for the pets who match with the petType.<br>
+	 * @param petType The pet's gender.
+	 * @return A list with the pets that match with the gender.
+	 */
+	
+	public String binarySearchByGender(String gender){
+	 
+		boolean found = false;
+		String list = "The pet(s) with that gender could not be found";
+		int start = 0;
+		int end = pets.size() - 1;
+		Pet pet = new Pet("", "", "", gender,"");
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if(pets.get(middle).compareByGender(pet) == 0){
+				
+				list = pets.get(middle).toString() + "\n";
+				list += searchByGenderLeft(middle, pet);
+				list += searchByGenderRight(middle, pet);
+				found = true;
+			}
+			if(pets.get(middle).compareByGender(pet) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}	
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the pets who match with the gender.<br>
+	 * @param gender The pet's gender.
+	 * @return A list with the pets that match with the gender.
+	 */
+	
+	public void sequentialSearchByGender(String gender){
+		
+		Pet pet;
+		boolean running = true;
+		pet = new Pet("", "", "", gender, "");
+		
+		for(int i = 0; i < pets.size() - 1 && running; i++){
+			
+			if(pets.get(i).compareByGender(pet) == 0){
+				
+				if(pets.get(i+1).compareByGender(pet) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the left of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param pet The pet which it compares.
+	 * @return A list with the pets that match with the petType.
+	 */
+	
+	public String searchByPetTypeLeft(int index, Pet pet){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index - 1; i >= 0 && is; i--){
+			
+			if(pets.get(i).compareByPetType(pet) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += pets.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching in the right of the ArrayList from the index indicated.<br>
+	 * @param index The position in which the for was going.
+	 * @param pet The pet which it compares.
+	 * @return A list with the pets that match with the petType.
+	 */
+	
+	public String searchByPetTypeRight(int index, Pet pet){
+		
+		String list = "";
+		boolean is = true;
+		
+		for(int i = index + 1; i > pets.size() && is; i++){
+			
+			if(pets.get(i).compareByPetType(pet) != 0){
+				
+				is = false;
+			}
+			else{
+				
+				list += pets.get(i).toString() + "\n";
+			}
+		}
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows searching for the pets who match with the petType.<br>
+	 * @param petType The pet's type.
+	 * @return A list with the pets that match with the petType.
+	 */
+	
+	public String binarySearchByPetType(String petType){
+	 
+		boolean found = false;
+		String list = "The pet(s) with that petType could not be found";
+		int start = 0;
+		int end = pets.size() - 1;
+		Pet pet = new Pet("", "", "", "", petType);
+		
+		while(start <= end && !found){
+			
+			int middle = ((start + end) / 2);
+			
+			if(pets.get(middle).compareByPetType(pet) == 0){
+				
+				list = pets.get(middle).toString() + "\n";
+				list += searchByPetTypeLeft(middle, pet);
+				list += searchByPetTypeRight(middle, pet);
+				found = true;
+			}
+			if(pets.get(middle).compareByPetType(pet) > 0){
+				
+				end = middle - 1;
+			}
+			else{
+				
+				start = middle + 1;
+			}
+		}	
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows doing a sequential search for the pets who match with the petType.<br>
+	 * @param petType The pet's type.
+	 * @return A list with the pets that match with the petType.
+	 */
+	
+	public void sequentialSearchByPetType(String petType){
+		
+		Pet pet;
+		boolean running = true;
+		pet = new Pet("", "", "", "", petType);
+		
+		for(int i = 0; i < pets.size() - 1 && running; i++){
+			
+			if(pets.get(i).compareByPetType(pet) == 0){
+				
+				if(pets.get(i+1).compareByPetType(pet) != 0){
+					
+					running = false;
+				}
+			}
+		}
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the pets who match with the id.<br>
+	 *@param arg The id of the pet. 
+	 *@return A list with the pets that match with the id and the time that it took.
+	 */
+	
+	public String searchById(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		sortPetsById();
+		
+		t1 = System.nanoTime();
+		list = binarySearchById(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		t1 = System.nanoTime();
+		sequentialSearchById(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the pets who match with the name.<br>
+	 *@param arg The name of the pet. 
+	 *@return A list with the pets that match with the name and the time that it took.
+	 */
+	
+	public String searchByName(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		sortPetsByName();
+		
+		t1 = System.nanoTime();
+		list = binarySearchByName(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		t1 = System.nanoTime();
+		sequentialSearchByName(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the pets who match with the birthdate.<br>
+	 *@param arg The birthdate of the pets. 
+	 *@return A list with the pets that match with the birthdate and the time that it took.
+	 */
+	
+	public String searchByCreationDate(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		sortPetsByBirthdate();
+		
+		t1 = System.nanoTime();
+		list = binarySearchByBirthdate(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		
+		t1 = System.nanoTime();
+		sequentialSearchByBirthdate(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the pets who match with the gender.<br>
+	 *@param arg The gender of the pet. 
+	 *@return A list with the pets that match with the gender and the time that it took.
+	 */
+	
+	public String searchByGender(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		sortPetsByPetType();
+		
+		t1 = System.nanoTime();
+		list = binarySearchByGender(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		t1 = System.nanoTime();
+		sequentialSearchByGender(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows calculating the time that took do a binary and sequential search for the pets who match with the petType.<br>
+	 *@param arg The petType of the pet. 
+	 *@return A list with the pets that match with the petType and the time that it took.
+	 */
+	
+	public String searchByPetType(String arg){
+		
+		String list = "";
+		long t1, t2;
+		long delta1, delta2;
+		
+		sortPetsByPetType();
+		
+		t1 = System.nanoTime();
+		list = binarySearchByPetType(arg) + "\n";
+		t2 = System.nanoTime();
+		delta1 = (t1 - t2);
+		
+		t1 = System.nanoTime();
+		sequentialSearchByPetType(arg);
+		t2 = System.nanoTime();
+		delta2 = (t1 - t2);
+		
+		list += "The binary search took: " + delta1 + "ns" + "\n";
+		list += "The sequantial search took: " + delta2 + "ns" + "\n";
+		
+		
+		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows showing the lists of the pets who match with the arg, and the time that took do the binary and sequential search.<br> 
+	 * @param typeOfSearch The type of search.
+	 * @param arg The search criterion.
+	 * @return A list with the pets who match with the criterion.
+	 */
+	
+	public String petsSearch(int typeOfSearch, String arg){
+		
+		String list = "";
+		
+		switch(typeOfSearch){
+		
+		case 1:
+			
+			list = searchById(arg);
+			
+			break;
+			
+		case 2:
+			
+			list = searchByName(arg);
+			
+			break;
+			
+		case 3:
+			
+			list = searchByCreationDate(arg);
+			
+			break;
+			
+		case 4:
+			
+			list = searchByGender(arg);
+			
+			break;
+			
+		case 5:
+			
+			list = searchByPetType(arg);
+			
+			break;
+		}
+		
 		return list;
 	}
 	
