@@ -403,7 +403,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		for(int i = pets.size(); i > 0; i--){	
 			for(int j = 0; j < i - 1; j++){
 				
-				if(pets.get(j).compareTo(pets.get(j+1)) > 0){
+				if(pets.get(j).compareById(pets.get(j+1)) > 0){
 					
 					Pet tmp = pets.get(j);
 					pets.set(j, pets.get(j+1));
@@ -449,14 +449,15 @@ public class Owner implements Serializable, Comparable<Owner> {
 	
 	public void sortPetsByBirthdate(){
 		
-		for(int i = 1; i < pets.size(); i++){
-			for(int j = i - 1; j >= 0 && pets.get(j).compareByBirthdate(pets.get(j+1)) > 0; j--){
+		for(int i = pets.size(); i > 0; i--){	
+			for(int j = 0; j < i - 1; j++){
 				
-				Pet one = pets.get(j);
-				Pet two = pets.get(j+1);
-				
-				pets.set(j, two);
-				pets.set(j+1, one);
+				if(pets.get(j).compareByBirthdate(pets.get(j+1)) > 0){
+					
+					Pet tmp = pets.get(j);
+					pets.set(j, pets.get(j+1));
+					pets.set(j+1, tmp);
+				}
 			}
 		}
 	}
@@ -833,10 +834,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 			
 			if(pets.get(i).compareTo(pet) == 0){
 				
-				if(pets.get(i+1).compareTo(pet) != 0){
-					
-					running = false;
-				}
+				running = false;
 			}
 		}
 	}
@@ -1258,7 +1256,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 	 *@return A list with the pets that match with the birthdate and the time that it took.
 	 */
 	
-	public String searchByCreationDate(String arg){
+	public String searchByBirthdate(String arg){
 		
 		String list = "";
 		long t1, t2;
@@ -1296,7 +1294,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		long t1, t2;
 		long delta1, delta2;
 		
-		sortPetsByPetType();
+		sortPetsByGender();
 		
 		t1 = System.nanoTime();
 		list = binarySearchByGender(arg) + "\n";
@@ -1373,7 +1371,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 			
 		case 3:
 			
-			list = searchByCreationDate(arg);
+			list = searchByBirthdate(arg);
 			
 			break;
 			
@@ -1392,6 +1390,25 @@ public class Owner implements Serializable, Comparable<Owner> {
 		
 		return list;
 	}
+	
+	/**
+	 *<b>Description:</b> This method allows getting the attribute pets.<br>
+	 *@return The attribute pets.
+	 */
+	
+	public ArrayList<Pet> getPets() {
+		return pets;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows setting the attribute clubs.<br>
+	 */
+
+	public void setPets(ArrayList<Pet> pets) {
+		this.pets = pets;
+	}
+
+
 	
 	/**
 	 *<b>Description:</b> This method allows returning the attribute name<br>

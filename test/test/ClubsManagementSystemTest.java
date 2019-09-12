@@ -3,7 +3,6 @@ import model.ClubsManagementSystem;
 import model.Club;
 import model.Owner;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
@@ -118,18 +117,18 @@ class ClubsManagementSystemTest {
 		Club c4 = new Club("", "", "", "");
 		Club c5 = new Club("", "", "", "");
 		Club c6 = new Club("", "", "", "");
-		Owner o1 =  new Owner("114242", "", "", "");
-		Owner o2 =  new Owner("121233", "", "", "");
-		Owner o3 =  new Owner("341243", "", "", "");
-		Owner o4 =  new Owner("344513", "", "", "");
-		Owner o5 =  new Owner("45123", "", "", "");
-		Owner o6 =  new Owner("31232", "", "", "");
-		Owner o7 =  new Owner("13123", "", "", "");
-		Owner o8 =  new Owner("13424", "", "", "");
-		Owner o9 =  new Owner("31321", "", "", "");
-		Owner o10 =  new Owner("45253", "", "", "");
-		Owner o11 =  new Owner("14214", "", "", "");
-		Owner o12 =  new Owner("12412", "", "", "");
+		Owner o1 =  new Owner("", "", "", "");
+		Owner o2 =  new Owner("", "", "", "");
+		Owner o3 =  new Owner("", "", "", "");
+		Owner o4 =  new Owner("", "", "", "");
+		Owner o5 =  new Owner("", "", "", "");
+		Owner o6 =  new Owner("", "", "", "");
+		Owner o7 =  new Owner("", "", "", "");
+		Owner o8 =  new Owner("", "", "", "");
+		Owner o9 =  new Owner("", "", "", "");
+		Owner o10 =  new Owner("", "", "", "");
+		Owner o11 =  new Owner("", "", "", "");
+		Owner o12 =  new Owner("", "", "", "");
 		
 		owners.add(o1);
 		owners.add(o2);
@@ -390,9 +389,7 @@ class ClubsManagementSystemTest {
 		lines = list.split("\n");
 		id = lines[0];
 		
-		assertEquals(id , "The club with that id could not be found");
-		
-		clubs = clubSystem.getClubs();			
+		assertEquals(id , "The club with that id could not be found");			
 	}
 	
 	@Test
@@ -529,7 +526,12 @@ class ClubsManagementSystemTest {
 		DateValue = DateLine[1].split(" ");
 		date = DateValue[1];
 		
-		assertEquals(date, "19/2/2014");	
+		assertEquals(date, "19/2/2014");
+		
+		list = clubSystem.clubSearch(3, "10/2/1700");
+		lines = list.split("\n");
+		
+		assertEquals(lines[0], "The club(s) with that creation date could not be found");
 	}
 	
 	@Test
@@ -598,6 +600,11 @@ class ClubsManagementSystemTest {
 		petType = petTypeValue[1];
 		
 		assertEquals(petType, "Flamingo");
+		
+		list = clubSystem.clubSearch(4, "Tiger");
+		lines = list.split("\n");
+		
+		assertEquals(lines[0], "The clubs(s) with that pet type could not be found");
 		
 	}
 }

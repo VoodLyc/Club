@@ -1122,7 +1122,7 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows getting the attribute clubs.<br>
-	 *@return The attribute Club.
+	 *@return The attribute clubs.
 	 */
 
 	public ArrayList<Club> getClubs() {

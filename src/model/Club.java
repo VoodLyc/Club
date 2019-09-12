@@ -719,7 +719,7 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 		
 		String list = "";
 		
-		sortOwnersByFavoritePet();
+		sortOwnersByNumberOfPets();
 		
 		for(Owner owner : owners){
 			
@@ -785,7 +785,7 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 	public String binarySearchById(String id){
 	 
 		boolean found = false;
-		String list = "The owner(s) with that id could not be found";
+		String list = "The owner with that id could not be found";
 		int start = 0;
 		int end = owners.size() - 1;
 		Owner owner = new Owner(id, "", "", "");
