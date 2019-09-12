@@ -823,14 +823,11 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 		boolean running = true;
 		owner = new Owner(id, "", "", "");
 		
-		for(int i = 0; i < owners.size() - 1 && running; i++){
+		for(int i = 0; i < owners.size() && running; i++){
 			
 			if(owners.get(i).compareTo(owner) == 0){
 				
-				if(owners.get(i+1).compareTo(owner) != 0){
-					
-					running = false;
-				}
+				running = false;
 			}
 		}
 	}
@@ -875,7 +872,7 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index + 1; i > owners.size() && is; i++){
+		for(int i = index + 1; i < owners.size() && is; i++){
 			
 			if(owners.get(i).compareByName(owner) != 0){
 				
@@ -991,7 +988,7 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index + 1; i > owners.size() && is; i++){
+		for(int i = index + 1; i < owners.size() && is; i++){
 			
 			if(owners.get(i).compareByBirthdate(owner) != 0){
 				
@@ -1107,7 +1104,7 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index + 1; i > owners.size() && is; i++){
+		for(int i = index + 1; i < owners.size() && is; i++){
 			
 			if(owners.get(i).compareByFavoritePet(owner) != 0){
 				
@@ -1384,4 +1381,23 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 	public String getCreationDate(){
 		return creationDate;
 	}
+	
+	/**
+	 *<b>Description:</b> This method allows returning the attribute owners<br>
+	 *@return The attribute owners.
+	 */
+
+	public ArrayList<Owner> getOwners() {
+		return owners;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows returning the attribute owners<br>
+	 *@return The attribute owners.
+	 */
+
+	public void setOwners(ArrayList<Owner> owners) {
+		this.owners = owners;
+	}
+	
 }

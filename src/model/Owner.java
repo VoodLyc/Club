@@ -709,7 +709,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index + 1; i > pets.size() && is; i++){
+		for(int i = index + 1; i < pets.size() && is; i++){
 			
 			if(pets.get(i).compareById(pet) != 0){
 				
@@ -773,17 +773,14 @@ public class Owner implements Serializable, Comparable<Owner> {
 		boolean running = true;
 		pet = new Pet(id, "", "", "", "");
 		
-		for(int i = 0; i < pets.size() - 1 && running; i++){
+		for(int i = 0; i < pets.size() && running; i++){
 			
 			if(pets.get(i).compareById(pet) == 0){
 				
-				if(pets.get(i+1).compareById(pet) != 0){
-					
-					running = false;
-				}
+				running = false;
 			}
 		}
-	}
+	}	
 	
 	/**
 	 *<b>Description:</b> This method allows searching for the pets who match with the name.<br>
@@ -884,7 +881,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index + 1; i > pets.size() && is; i++){
+		for(int i = index + 1; i < pets.size() && is; i++){
 			
 			if(pets.get(i).compareByBirthdate(pet) != 0){
 				
@@ -1000,7 +997,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index + 1; i > pets.size() && is; i++){
+		for(int i = index + 1; i < pets.size() && is; i++){
 			
 			if(pets.get(i).compareByGender(pet) != 0){
 				
@@ -1117,7 +1114,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index + 1; i > pets.size() && is; i++){
+		for(int i = index + 1; i < pets.size() && is; i++){
 			
 			if(pets.get(i).compareByPetType(pet) != 0){
 				

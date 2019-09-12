@@ -302,7 +302,8 @@ public class ClubsManagementSystem {
 	
 	/**
 	 *<b>Description:</b> This method allows sorting the clubs from minor to major by the name.<br>
-	 *<b>Post:</b> The clubs are sorted by name from minor to major.<br>
+	 *<b>Post:</b> The club
+	 *s are sorted by name from minor to major.<br>
 	 */
 	
 	public void sortClubsByName(){
@@ -555,7 +556,7 @@ public class ClubsManagementSystem {
 	public String binarySearchById(String id){
 	 
 		boolean found = false;
-		String list = "The club(s) with that id could not be found";
+		String list = "The club with that id could not be found";
 		int start = 0;
 		int end = clubs.size() - 1;
 		Club club = new Club(id, "", "", "");
@@ -593,14 +594,11 @@ public class ClubsManagementSystem {
 		boolean running = true;
 		club = new Club(id, "", "", "");
 		
-		for(int i = 0; i < clubs.size() - 1 && running; i++){
+		for(int i = 0; i < clubs.size() && running; i++){
 			
-			if(clubs.get(i).compare(clubs.get(i), club) == 0){
+			if(clubs.get(i).compare(clubs.get(i), club) == 0){				
 				
-				if(clubs.get(i+1).compare(clubs.get(i+1), club) != 0){
-					
-					running = false;
-				}
+				running = false;
 			}
 		}
 	}
@@ -645,7 +643,7 @@ public class ClubsManagementSystem {
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index + 1; i > clubs.size() && is; i++){
+		for(int i = index + 1; i < clubs.size() && is; i++){
 			
 			if(clubs.get(i).compare(clubs.get(i), club) != 0){
 				
@@ -714,7 +712,7 @@ public class ClubsManagementSystem {
 			
 			if(clubs.get(i).compare(clubs.get(i), club) == 0){
 				
-				if(clubs.get(i+1).compare(clubs.get(i), club) != 0){
+				if(clubs.get(i+1).compare(clubs.get(i+1), club) != 0){
 					
 					running = false;
 				}
@@ -762,7 +760,7 @@ public class ClubsManagementSystem {
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index + 1; i > clubs.size() && is; i++){
+		for(int i = index + 1; i < clubs.size() && is; i++){
 			
 			if(clubs.get(i).compareByCreationDate(club) != 0){
 				
@@ -879,7 +877,7 @@ public class ClubsManagementSystem {
 		String list = "";
 		boolean is = true;
 		
-		for(int i = index + 1; i > clubs.size() && is; i++){
+		for(int i = index + 1; i < clubs.size() && is; i++){
 			
 			if(clubs.get(i).compareByPetType(club) != 0){
 				
@@ -1120,5 +1118,22 @@ public class ClubsManagementSystem {
 		}
 		
 		return list;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows getting the attribute clubs.<br>
+	 *@return The attribute Club.
+	 */
+
+	public ArrayList<Club> getClubs() {
+		return clubs;
+	}
+	
+	/**
+	 *<b>Description:</b> This method allows setting the attribute clubs.<br>
+	 */
+	
+	public void setClubs(ArrayList<Club> clubs) {
+		this.clubs = clubs;
 	}
 }
