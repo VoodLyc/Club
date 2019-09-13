@@ -1345,6 +1345,54 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 		
 		return list;
 	}
+	
+	public void generatedData(File file){
+		
+		FileReader fileReader;
+		BufferedReader reader;
+		String[] attributes;
+		String line;
+		
+		try{
+			
+			fileReader = new FileReader(file);
+			reader = new BufferedReader(fileReader);
+			attributes = new String[4];
+			
+			while((line = reader.readLine()) != null){
+				
+				attributes = line.split(",");
+				
+				createOwner(attributes);
+				
+			}
+			
+			reader.close();
+			saveOwners();
+		}
+		catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void createOwner(String[] attributes){
+		
+		Owner owner;
+		
+		owner = new Owner(attributes[0], attributes[1], attributes[2], attributes[3]);
+		
+		owner.addPets("1", "Sasu", "25/5/2010", "M", "Cat");
+		owner.addPets("2", "Neko", "10/3/2018", "F", "Gecko");
+		owner.addPets("3", "Rei", "3/9/2009", "M", "Lion");
+		
+		owners.add(owner);
+		
+//		System.out.println("The owner with the id: " + owner.getId() + " and name: " + owner.getName() + "was added succesfully");
+		
+	}
 
 	/**
 	 *<b>Description:</b> This method allows returning the attribute name.<br>

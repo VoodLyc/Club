@@ -1,16 +1,20 @@
 1
-JohanClub
+Pampered Pets Club
 3/10/2001
-Perros
-1193545174
-JohanClub
-29/3/2004
-Perros
-1193545175
-JuanClub
-9/3/2009
-Gatos
+Dogs
 2
-ArizaClub
-2/12/2016
-Leones
+Lucky's Pet Club
+29/3/2004
+Cats
+3
+The Tails Club
+9/3/2015
+Monkeys
+4
+Furry Friends Club
+2/12/2014
+Bears
+5
+Fluffy & Feathers Club
+9/12/2017
+Owls

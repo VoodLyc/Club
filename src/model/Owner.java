@@ -45,7 +45,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 		this.birthdate = birthdate;
 		this.favoritePet = favoritePet;
 		pets = new ArrayList<Pet>();
-		loadPets();
+//		loadPets();
 	}
 	
 //Methods
@@ -130,7 +130,8 @@ public class Owner implements Serializable, Comparable<Owner> {
 		
 		if(removePet(name)){
 			
-			savePets();
+//			savePets();
+			
 			msg = "The pet was deleted succesfully";
 		}
 		
@@ -184,7 +185,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 			else{
 				
 				pets.add(new Pet(id, name, birthdate, gender, petType));
-				savePets();
+//				savePets();
 				msg = "The pet was added successfully";
 				
 			}

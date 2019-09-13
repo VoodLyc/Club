@@ -1120,6 +1120,20 @@ public class ClubsManagementSystem {
 		return list;
 	}
 	
+	public void generatedData(){
+		
+		File[] files;
+		File file;
+		
+		file = new File("data/generatedData");
+		files = file.listFiles();
+		
+		for(int i = 0; i < files.length; i++) {
+			
+			clubs.get(i).generatedData(files[i]);
+		}
+	}
+	
 	/**
 	 *<b>Description:</b> This method allows getting the attribute clubs.<br>
 	 *@return The attribute clubs.

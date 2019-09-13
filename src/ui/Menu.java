@@ -72,6 +72,12 @@ public class Menu{
 
 				break;
 				
+//			case 7:
+//				
+//				clubsSystem.generatedData();
+//
+//				break;
+				
 			}
 		}	
 	}
@@ -90,6 +96,7 @@ public class Menu{
 			System.out.println("4. Generate lists");
 			System.out.println("5. Search");
 			System.out.println("6. Exit");
+//			System.out.println("7. GeneratedData");
 						
 			try{
 
@@ -699,8 +706,10 @@ public class Menu{
 				currentOwner = null;
 				running = false;
 
-				break;	
+				break;
 			}
+			
+			currentClub.saveOwners();
 		}	
 	}
 	
