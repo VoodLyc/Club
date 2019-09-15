@@ -246,11 +246,7 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 				input = new ObjectInputStream(fileInput);
 				owners = (ArrayList<Owner>) input.readObject();
 				input.close();
-				
-				for(Owner o : owners){
-					
-					o.loadPets();
-				}
+	
 			}
 			else{
 				
@@ -1390,7 +1386,7 @@ public class Club implements Comparable <Club>, Comparator<Club>{
 		
 		owners.add(owner);
 		
-//		System.out.println("The owner with the id: " + owner.getId() + " and name: " + owner.getName() + "was added succesfully");
+//		System.out.println("The owner with the id: " + owner.getId() + " and name: " + owner.getName() + "was added successfully");
 		
 	}
 

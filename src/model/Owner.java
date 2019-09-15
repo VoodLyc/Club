@@ -75,7 +75,7 @@ public class Owner implements Serializable, Comparable<Owner> {
 			}
 			else{
 				
-				savePets();
+//				savePets();
 			}
 			
 		}
